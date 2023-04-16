@@ -2,6 +2,7 @@ package com.github.tvloet1.seacleaner.entities.buttons;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.entities.impl.TextEntity;
+import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.userinput.MouseButtonPressedListener;
 import com.github.hanyaeger.api.userinput.MouseEnterListener;
 import com.github.hanyaeger.api.userinput.MouseExitListener;
@@ -39,6 +40,8 @@ public class StartButton extends TextEntity
 
 	@Override
 	public void onMouseButtonPressed(MouseButton button, Coordinate2D coordinate2d) {
+		var startGameSound = new SoundClip("audio/soundStartGame.wav");
+		startGameSound.play();
 		seacleaner.setActiveScene(1);
 	}
 

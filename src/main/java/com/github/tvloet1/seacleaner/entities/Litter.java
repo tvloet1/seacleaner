@@ -18,8 +18,8 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
     @Override
     public void onCollision(Collider collidingObject) {
         if(collidingObject instanceof Swimmer) {
-            var popSound = new SoundClip("audio/pop.mp3");
-            popSound.play();
+            var pickUpTrashSound = new SoundClip("audio/soundPickUpTrash.wav");
+            pickUpTrashSound.play();
             remove();
         }
     }

@@ -7,6 +7,7 @@ import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.SceneBorderTouchingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
+import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
@@ -22,7 +23,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	private int score;
 
 	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, ScoreText scoreText) {
-		super("sprites/swimmingMan.png", initialLocation, new Size(120, 240), 1, 2);
+		super("sprites/swimmingManv4.png", initialLocation, new Size(120, 240), 2, 2);
 		this.seacleaner = seacleaner;
 		this.scoreText = scoreText;
 		this.score = 0;
@@ -33,30 +34,52 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
 		if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(3, 45d);
-			setCurrentFrameIndex(2);
+			setCurrentFrameIndex(goRight());
 		} else if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.UP)) {
 			setMotion(3, 135d);
-			setCurrentFrameIndex(2);
+			setCurrentFrameIndex(goRight());
 		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(3, 315d);
-			setCurrentFrameIndex(1);
+			setCurrentFrameIndex(goLeft());
 		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.UP)) {
 			setMotion(3, 225d);
-			setCurrentFrameIndex(1);
+			setCurrentFrameIndex(goLeft());
 		} else if (pressedKeys.contains(KeyCode.LEFT)) {
 			setMotion(3, 270d);
-			setCurrentFrameIndex(1);
+			setCurrentFrameIndex(goLeft());
 		} else if (pressedKeys.contains(KeyCode.RIGHT)) {
 			setMotion(3, 90d);
-			setCurrentFrameIndex(2);
+			setCurrentFrameIndex(goRight());
 		} else if (pressedKeys.contains(KeyCode.UP)) {
 			setMotion(3, 180d);
 		} else if (pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(3, 0d);
-		} else if (pressedKeys.contains(KeyCode.T)) {
-			seacleaner.setActiveScene(2);
+		} else if (pressedKeys.contains(KeyCode.Q)) {
+			setCurrentFrameIndex(0);
+		} else if (pressedKeys.contains(KeyCode.W)) {
+			setCurrentFrameIndex(1);
+		} else if (pressedKeys.contains(KeyCode.E)) {
+			setCurrentFrameIndex(2);
+		} else if (pressedKeys.contains(KeyCode.R)) {
+			setCurrentFrameIndex(3);
 		} else {
 			setSpeed(0);
+		}
+	}
+
+	private int goRight() {
+		if(getCurrentFrameIndex()<=1) {
+			return 0;
+		}else {
+			return 2;
+		}
+	}
+
+	private int goLeft() {
+		if(getCurrentFrameIndex()<=1) {
+			return 1;
+		}else {
+			return 3;
 		}
 	}
 
@@ -87,6 +110,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			scoreText.setScoreText(score);
 		}
 		if(score >= 10) {
+			var finishGameSound = new SoundClip("audio/soundFinishGame.wav");
+			finishGameSound.play();
 			seacleaner.setActiveScene(2);
 		}
 	}
