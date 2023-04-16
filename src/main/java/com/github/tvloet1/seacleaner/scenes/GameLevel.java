@@ -3,9 +3,11 @@ package com.github.tvloet1.seacleaner.scenes;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.scenes.DynamicScene;
+import com.github.hanyaeger.api.scenes.TileMap;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
+import com.github.tvloet1.seacleaner.entities.map.ObstacleTileMap;
 import com.github.tvloet1.seacleaner.entities.spawners.LitterSpawner;
 import com.github.tvloet1.seacleaner.entities.text.ScoreText;
 
@@ -38,6 +40,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
 
 	@Override
 	public void setupTileMaps() {
+		addTileMap(new ObstacleTileMap());
 	}
 
 }
