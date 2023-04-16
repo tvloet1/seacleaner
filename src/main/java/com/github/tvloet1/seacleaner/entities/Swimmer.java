@@ -3,6 +3,8 @@ package com.github.tvloet1.seacleaner.entities;
 import java.util.Set;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
+import com.github.hanyaeger.api.entities.Collided;
+import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.SceneBorderTouchingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
@@ -12,16 +14,19 @@ import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.text.ScoreText;
 import javafx.scene.input.KeyCode;
 
-public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBorderTouchingWatcher {
+public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBorderTouchingWatcher, Collider, Collided {
 
 	private SeaCleaner seacleaner;
 	private ScoreText scoreText;
+
+	private int score;
 
 	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, ScoreText scoreText) {
 		super("sprites/swimmingMan.png", initialLocation, new Size(120, 240), 1, 2);
 		this.seacleaner = seacleaner;
 		this.scoreText = scoreText;
-		scoreText.setScoreText(0);
+		this.score = 0;
+		scoreText.setScoreText(score);
 	}
 
 	@Override
@@ -75,4 +80,14 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		}
 	}
 
+	@Override
+	public void onCollision(Collider collidingObject) {
+		if (collidingObject instanceof Litter){
+			score++;
+			scoreText.setScoreText(score);
+		}
+		if(score >= 10) {
+			seacleaner.setActiveScene(2);
+		}
+	}
 }
