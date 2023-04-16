@@ -6,4 +6,5 @@ module seacleaner {
     opens audio;
     opens backgrounds;
     opens sprites;
+    opens sprites.litter;
 }

@@ -6,6 +6,7 @@ import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
+import com.github.tvloet1.seacleaner.entities.spawners.LitterSpawner;
 import com.github.tvloet1.seacleaner.entities.text.ScoreText;
 
 public class GameLevel extends DynamicScene implements EntitySpawnerContainer, TileMapContainer {
@@ -32,6 +33,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
 
 	@Override
 	public void setupEntitySpawners() {
+		addEntitySpawner(new LitterSpawner(getWidth(), getHeight()));
 	}
 
 	@Override
