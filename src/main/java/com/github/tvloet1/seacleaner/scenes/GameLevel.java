@@ -19,7 +19,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
 
 	@Override
 	public void setupScene() {
-		setBackgroundAudio("audio/behindEnemyLines.mp3");
+//		setBackgroundAudio("audio/behindEnemyLines.mp3");
 		setBackgroundImage("backgrounds/backgroundGame.jpg");
 	}
 
