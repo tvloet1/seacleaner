@@ -29,7 +29,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
 	public void setupEntities() {
 		var scoreText = new ScoreText(new Coordinate2D(5,5));
 		addEntity(scoreText);
-		var swimmer = new Swimmer(new Coordinate2D(500, 500), seacleaner, scoreText);
+		var swimmer = new Swimmer(new Coordinate2D(500, 150), seacleaner, scoreText);
 		addEntity(swimmer);
 	}
 

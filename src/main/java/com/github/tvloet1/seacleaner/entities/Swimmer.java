@@ -12,6 +12,8 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 
+import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
+import com.github.tvloet1.seacleaner.entities.map.Rock;
 import com.github.tvloet1.seacleaner.entities.text.ScoreText;
 import javafx.scene.input.KeyCode;
 
@@ -105,9 +107,33 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 
 	@Override
 	public void onCollision(Collider collidingObject) {
+		var direction = getDirection();
+		var swimmerX = getBoundingBox().getCenterX();
+		var swimmerY = getBoundingBox().getCenterY();
+		var collidingObjectX = collidingObject.getBoundingBox().getCenterX();
+		var collidingObjectY = collidingObject.getBoundingBox().getCenterY();
 		if (collidingObject instanceof Litter){
 			score++;
 			scoreText.setScoreText(score);
+		} else if (collidingObject instanceof SeaUrchin) {
+			var finishGameSound = new SoundClip("audio/soundFinishGame.wav");
+			finishGameSound.play();
+			seacleaner.setActiveScene(2);
+		} else if (collidingObject instanceof Rock) {
+			setSpeed(0);
+			if(swimmerY<collidingObjectY && direction == 0d){
+				// Swimmer above rock swimming down
+				setAnchorLocationY(collidingObject.getBoundingBox().getMinY()-getHeight()-1);
+			} else if (swimmerY>collidingObjectY && direction == 180d) {
+				// Swimmer below rock swimming up
+				setAnchorLocationY(collidingObject.getBoundingBox().getMaxY()+1);
+			} else if (swimmerX<collidingObjectX && direction == 90d) {
+				// Swimmer left of rock swimming right
+				setAnchorLocationX(collidingObject.getBoundingBox().getMinX()-getWidth()-1);
+			} else if (swimmerX>collidingObjectX && direction == 270d) {
+				// Swimmer right of rock swimming left
+				setAnchorLocationX(collidingObject.getBoundingBox().getMaxX()+1);
+			}
 		}
 		if(score >= 10) {
 			var finishGameSound = new SoundClip("audio/soundFinishGame.wav");
