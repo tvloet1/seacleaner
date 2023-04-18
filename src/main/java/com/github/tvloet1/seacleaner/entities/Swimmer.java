@@ -26,7 +26,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	private int score;
 
 	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, ScoreText scoreText) {
-		super("sprites/swimmingManv4.png", initialLocation, new Size(120, 240), 2, 2);
+		super("sprites/swimmingManv5.png", initialLocation, new Size(120, 240), 5, 2);
 		this.seacleaner = seacleaner;
 		this.scoreText = scoreText;
 		this.score = 0;
@@ -37,52 +37,60 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
 		if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(3, 45d);
-			setCurrentFrameIndex(goRight());
+			faceRight();
 		} else if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.UP)) {
 			setMotion(3, 135d);
-			setCurrentFrameIndex(goRight());
+			faceRight();
 		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(3, 315d);
-			setCurrentFrameIndex(goLeft());
+			faceLeft();
 		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.UP)) {
 			setMotion(3, 225d);
-			setCurrentFrameIndex(goLeft());
+			faceLeft();
 		} else if (pressedKeys.contains(KeyCode.LEFT)) {
 			setMotion(3, 270d);
-			setCurrentFrameIndex(goLeft());
+			faceLeft();
 		} else if (pressedKeys.contains(KeyCode.RIGHT)) {
 			setMotion(3, 90d);
-			setCurrentFrameIndex(goRight());
+			faceRight();
 		} else if (pressedKeys.contains(KeyCode.UP)) {
 			setMotion(3, 180d);
 		} else if (pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(3, 0d);
-		} else if (pressedKeys.contains(KeyCode.Q)) {
-			setCurrentFrameIndex(0);
-		} else if (pressedKeys.contains(KeyCode.W)) {
-			setCurrentFrameIndex(1);
-		} else if (pressedKeys.contains(KeyCode.E)) {
-			setCurrentFrameIndex(2);
-		} else if (pressedKeys.contains(KeyCode.R)) {
-			setCurrentFrameIndex(3);
+		} else if (pressedKeys.contains(KeyCode.I)) {
+			increaseBagSize();
+		} else if (pressedKeys.contains(KeyCode.D)) {
+			decreaseBagSize();
 		} else {
 			setSpeed(0);
 		}
 	}
 
-	private int goRight() {
-		if(getCurrentFrameIndex()<=1) {
-			return 0;
-		}else {
-			return 2;
+	private void increaseBagSize() {
+		var currentFrameIndex = getCurrentFrameIndex();
+		if(currentFrameIndex < 8) {
+			setCurrentFrameIndex(currentFrameIndex+2);
 		}
 	}
 
-	private int goLeft() {
-		if(getCurrentFrameIndex()<=1) {
-			return 1;
-		}else {
-			return 3;
+	private void decreaseBagSize() {
+		var currentFrameIndex = getCurrentFrameIndex();
+		if(currentFrameIndex > 1) {
+			setCurrentFrameIndex(currentFrameIndex-2);
+		}
+	}
+
+	private void faceRight() {
+		var currentFrameIndex = getCurrentFrameIndex();
+		if(currentFrameIndex % 2 !=0) {
+			setCurrentFrameIndex(currentFrameIndex-1);
+		}
+	}
+
+	private void faceLeft() {
+		var currentFrameIndex = getCurrentFrameIndex();
+		if(currentFrameIndex % 2 ==0) {
+			setCurrentFrameIndex(currentFrameIndex+1);
 		}
 	}
 
@@ -111,6 +119,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		if (collidingObject instanceof Litter){
 			score++;
 			scoreText.setScoreText(score);
+			increaseBagSize();
 		} else if (collidingObject instanceof SeaUrchin) {
 			seacleaner.setActiveScene(2);
 		} else if (collidingObject instanceof Rock) {
