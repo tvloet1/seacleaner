@@ -15,6 +15,7 @@ import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
 import com.github.tvloet1.seacleaner.entities.text.ScoreText;
+import javafx.geometry.Bounds;
 import javafx.scene.input.KeyCode;
 
 public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBorderTouchingWatcher, Collider, Collided {
@@ -107,38 +108,57 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 
 	@Override
 	public void onCollision(Collider collidingObject) {
-		var direction = getDirection();
-		var swimmerX = getBoundingBox().getCenterX();
-		var swimmerY = getBoundingBox().getCenterY();
-		var collidingObjectX = collidingObject.getBoundingBox().getCenterX();
-		var collidingObjectY = collidingObject.getBoundingBox().getCenterY();
 		if (collidingObject instanceof Litter){
 			score++;
 			scoreText.setScoreText(score);
 		} else if (collidingObject instanceof SeaUrchin) {
-			var finishGameSound = new SoundClip("audio/soundFinishGame.wav");
-			finishGameSound.play();
 			seacleaner.setActiveScene(2);
 		} else if (collidingObject instanceof Rock) {
+			var anchorLocation = determineAnchorDirection(getBoundingBox(), collidingObject.getBoundingBox(), getDirection(), getAnchorLocation());
 			setSpeed(0);
-			if(swimmerY<collidingObjectY && direction == 0d){
-				// Swimmer above rock swimming down
-				setAnchorLocationY(collidingObject.getBoundingBox().getMinY()-getHeight()-1);
-			} else if (swimmerY>collidingObjectY && direction == 180d) {
-				// Swimmer below rock swimming up
-				setAnchorLocationY(collidingObject.getBoundingBox().getMaxY()+1);
-			} else if (swimmerX<collidingObjectX && direction == 90d) {
-				// Swimmer left of rock swimming right
-				setAnchorLocationX(collidingObject.getBoundingBox().getMinX()-getWidth()-1);
-			} else if (swimmerX>collidingObjectX && direction == 270d) {
-				// Swimmer right of rock swimming left
-				setAnchorLocationX(collidingObject.getBoundingBox().getMaxX()+1);
-			}
+			setAnchorLocation(anchorLocation);
 		}
 		if(score >= 10) {
 			var finishGameSound = new SoundClip("audio/soundFinishGame.wav");
 			finishGameSound.play();
 			seacleaner.setActiveScene(2);
 		}
+	}
+
+	private Coordinate2D determineAnchorDirection(Bounds swimmer, Bounds collidingObject, double direction, Coordinate2D anchorLocation) {
+		if (direction == 0d) {
+			return new Coordinate2D(anchorLocation.getX(),collidingObject.getMinY()-getHeight()-1);
+		} else if (direction == 180d) {
+			return new Coordinate2D(anchorLocation.getX(),collidingObject.getMaxY()+1);
+		} else if (direction == 270d) {
+			return new Coordinate2D(collidingObject.getMaxX()+1,anchorLocation.getY());
+		} else if (direction == 90d) {
+			return new Coordinate2D(collidingObject.getMinX()-getWidth()-1,anchorLocation.getY());
+		} else if(direction == 45d) {
+			if(swimmer.getMaxX() - collidingObject.getMinX() < swimmer.getMaxY() - collidingObject.getMinY()) {
+				return new Coordinate2D(collidingObject.getMinX() - getWidth() - 1, anchorLocation.getY());
+			} else {
+				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMinY()-getHeight()-1);
+			}
+		} else if(direction == 135d) {
+			if(swimmer.getMaxX() - collidingObject.getMinX() < collidingObject.getMaxY() - swimmer.getMinY()) {
+				return new Coordinate2D(collidingObject.getMinX()-getWidth()-1,anchorLocation.getY());
+			} else {
+				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMaxY()+1);
+			}
+		} else if (direction == 225d) {
+			if(collidingObject.getMaxX() - swimmer.getMinX() < collidingObject.getMaxY() - swimmer.getMinY()) {
+				return new Coordinate2D(collidingObject.getMaxX()+1,anchorLocation.getY());
+			} else {
+				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMaxY()+1);
+			}
+		} else if (direction == 315d) {
+			if(swimmer.getMinX() - collidingObject.getMaxX() < collidingObject.getMinY() - swimmer.getMaxY()) {
+				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMinY()-getHeight()-1);
+			} else {
+				return new Coordinate2D(collidingObject.getMaxX()+1,anchorLocation.getY());
+			}
+		}
+		return anchorLocation;
 	}
 }

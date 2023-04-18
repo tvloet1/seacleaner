@@ -16,7 +16,7 @@ public class GameOverScene extends StaticScene {
 
 	@Override
 	public void setupScene() {
-		setBackgroundAudio("audio/ocean.mp3");
+		setBackgroundAudio("audio/musicEndScene.wav");
 		setBackgroundImage("backgrounds/backgroundEnd.jpg");
 	}
 
