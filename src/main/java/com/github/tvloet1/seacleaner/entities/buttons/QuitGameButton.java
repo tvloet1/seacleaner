@@ -18,8 +18,8 @@ public class QuitGameButton extends TextEntity implements MouseButtonPressedList
 
     public QuitGameButton(Coordinate2D initialLocation, SeaCleaner seacleaner) {
         super(initialLocation,"Quit game");
-        setFill(Color.PURPLE);
-        setFont(Font.font("Roboto", FontWeight.BOLD, 30));
+        setFill(Color.ORANGE);
+        setFont(Font.font("Courier New", FontWeight.BOLD, 30));
         this.seacleaner = seacleaner;
     }
 
@@ -30,13 +30,13 @@ public class QuitGameButton extends TextEntity implements MouseButtonPressedList
 
     @Override
     public void onMouseEntered() {
-        setFill(Color.VIOLET);
+        setFill(Color.YELLOW);
         setCursor(Cursor.HAND);
     }
 
     @Override
     public void onMouseExited() {
-        setFill(Color.PURPLE);
+        setFill(Color.ORANGE);
         setCursor(Cursor.DEFAULT);
     }
 }
