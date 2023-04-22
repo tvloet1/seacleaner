@@ -117,7 +117,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	@Override
 	public void onCollision(Collider collidingObject) {
 		if (collidingObject instanceof Litter){
-			score++;
+			increaseScore(((Litter) collidingObject).getValue());
 			scoreText.setScoreText(score);
 			increaseBagSize();
 		} else if (collidingObject instanceof SeaUrchin) {
@@ -169,5 +169,9 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			}
 		}
 		return anchorLocation;
+	}
+
+	private void increaseScore (int value) {
+		score = score + value;
 	}
 }

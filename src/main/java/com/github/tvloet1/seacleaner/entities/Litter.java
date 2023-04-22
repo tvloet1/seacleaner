@@ -10,8 +10,10 @@ import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 
 public class Litter extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher {
-    public Litter(String resource, Coordinate2D initialLocation, int speed) {
+    private int value;
+    public Litter(String resource, Coordinate2D initialLocation, int speed, int value) {
         super(resource, initialLocation, new Size(30, 60));
+        this.value = value;
         setMotion(speed,0d);
     }
 
@@ -24,6 +26,9 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
         }
     }
 
+    public int getValue() {
+        return value;
+    }
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
