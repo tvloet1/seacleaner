@@ -9,8 +9,8 @@ import javafx.scene.text.FontWeight;
 public class ScoreText extends TextEntity {
     public ScoreText(Coordinate2D initialLocation) {
         super(initialLocation);
-        setFont(Font.font("Courier", FontWeight.NORMAL, 30));
-        setFill(Color.GOLD);
+        setFont(Font.font("Courier New", FontWeight.BOLD, 30));
+        setFill(Color.ORANGE);
     }
 
     public void setScoreText(int score) {

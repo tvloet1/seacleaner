@@ -12,7 +12,7 @@ public class BreathText extends TextEntity {
 	public BreathText(Coordinate2D initialLocation) {
 		super(initialLocation);
 
-		setFont(Font.font("Courier", FontWeight.NORMAL, 30));
+		setFont(Font.font("Courier New", FontWeight.NORMAL, 30));
 		setFill(Color.SILVER);
 	}
 

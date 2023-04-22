@@ -21,6 +21,7 @@ public class TitleScene extends StaticScene {
 	@Override
 	public void setupScene() {
 		setBackgroundAudio("audio/behindEnemyLines.mp3");
+		setBackgroundAudioVolume(0.25);
 		setBackgroundImage("backgrounds/backgroundStart.jpg");
 	}
 
