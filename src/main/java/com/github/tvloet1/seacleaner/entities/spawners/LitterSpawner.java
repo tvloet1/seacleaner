@@ -9,12 +9,10 @@ import java.util.Random;
 public class LitterSpawner extends EntitySpawner {
 
     private final double sceneWidth;
-    private final double sceneHeight;
 
-    public LitterSpawner(double sceneWidth, double sceneHeight) {
+    public LitterSpawner(double sceneWidth) {
         super(1000);
-        this.sceneWidth = sceneWidth;
-        this.sceneHeight = sceneHeight;
+        this.sceneWidth = sceneWidth;;
     }
 
     @Override
