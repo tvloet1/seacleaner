@@ -124,6 +124,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			scoreText.setScoreText(score);
 			increaseBagSize();
 		} else if (collidingObject instanceof SeaUrchin) {
+			seacleaner.endMusicScene();
 			seacleaner.setActiveScene(3);
 		} else if (collidingObject instanceof Rock) {
 			var anchorLocation = determineAnchorDirection(getBoundingBox(), collidingObject.getBoundingBox(), getDirection(), getAnchorLocation());
@@ -134,6 +135,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			changeSpeed(((Modify) collidingObject).execute());
 		}
 		if(score >= 10) {
+			seacleaner.endMusicScene();
 			seacleaner.setActiveScene(2);
 		}
 	}

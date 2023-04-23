@@ -19,7 +19,7 @@ public class GameOverSceneLose extends StaticScene {
 
     @Override
     public void setupScene() {
-        setBackgroundAudio("audio/fogHorn.mp3");
+        setupMusic();
         setBackgroundImage("backgrounds/backgroundEndLose.jpg");
     }
 
@@ -40,5 +40,11 @@ public class GameOverSceneLose extends StaticScene {
         );
         quitGameButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         addEntity(quitGameButton);
+    }
+
+    private void setupMusic() {
+        if(seacleaner.getMusicOn()) {
+            setBackgroundAudio("audio/fogHorn.mp3");
+        }
     }
 }

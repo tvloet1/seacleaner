@@ -20,7 +20,7 @@ public class GameOverSceneWin extends StaticScene {
 
 	@Override
 	public void setupScene() {
-		setBackgroundAudio("audio/musicEndScene.wav");
+		setupMusic();
 		setBackgroundImage("backgrounds/backgroundEndWin.jpg");
 	}
 
@@ -41,6 +41,12 @@ public class GameOverSceneWin extends StaticScene {
 		);
 		quitGameButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
 		addEntity(quitGameButton);
+	}
+
+	private void setupMusic() {
+		if(seacleaner.getMusicOn()) {
+			setBackgroundAudio("audio/musicEndScene.wav");
+		}
 	}
 
 }

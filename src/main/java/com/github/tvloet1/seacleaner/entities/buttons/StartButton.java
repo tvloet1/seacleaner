@@ -42,6 +42,7 @@ public class StartButton extends TextEntity
 	public void onMouseButtonPressed(MouseButton button, Coordinate2D coordinate2d) {
 		var startGameSound = new SoundClip("audio/soundStartGame.wav");
 		startGameSound.play();
+		seacleaner.endMusicScene();
 		seacleaner.setActiveScene(1);
 	}
 
