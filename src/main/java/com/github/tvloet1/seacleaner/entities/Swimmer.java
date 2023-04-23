@@ -131,7 +131,6 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			setSpeed(0);
 			setAnchorLocation(anchorLocation);
 		} else if (collidingObject instanceof Modify) {
-			System.out.println("GO" + ((Modify) collidingObject).execute());
 			changeSpeed(((Modify) collidingObject).execute());
 		}
 		if(score >= 10) {

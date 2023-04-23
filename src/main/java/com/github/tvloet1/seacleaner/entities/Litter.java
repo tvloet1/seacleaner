@@ -11,17 +11,18 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 
 public class Litter extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher {
     private int value;
-    public Litter(String resource, Coordinate2D initialLocation, int speed, int value) {
+    private boolean soundEffects;
+    public Litter(String resource, Coordinate2D initialLocation, int speed, int value, boolean soundEffects) {
         super(resource, initialLocation, new Size(30, 60));
         this.value = value;
+        this.soundEffects = soundEffects;
         setMotion(speed,0d);
     }
 
     @Override
     public void onCollision(Collider collidingObject) {
         if(collidingObject instanceof Swimmer) {
-            var pickUpTrashSound = new SoundClip("audio/soundPickUpTrash.wav");
-            pickUpTrashSound.play();
+            playSound();
             remove();
         }
     }
@@ -32,5 +33,12 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
+    }
+
+    private void playSound() {
+        if (soundEffects) {
+            var pickUpTrashSound = new SoundClip("audio/soundPickUpTrash.wav");
+            pickUpTrashSound.play();
+        }
     }
 }

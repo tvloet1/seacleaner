@@ -9,6 +9,7 @@ import com.github.tvloet1.seacleaner.scenes.TitleScene;
 
 public class SeaCleaner extends YaegerGame {
     private boolean musicOn;
+    private boolean soundEffectsOn;
     public static void main(String[] args){
         launch(args);
     }
@@ -18,6 +19,7 @@ public class SeaCleaner extends YaegerGame {
         setGameTitle("Sea Cleaner");
         setSize(new Size(1200, 800));
         musicOn = false;
+        soundEffectsOn = true;
         switchMusic();
     }
 
@@ -44,5 +46,13 @@ public class SeaCleaner extends YaegerGame {
     }
     public void endMusicScene() {
         stopBackgroundAudio();
+    }
+
+    public boolean getSoundEffectsOn() {
+        return soundEffectsOn;
+    }
+
+    public void switchSoundEffectsOn() {
+        soundEffectsOn = !soundEffectsOn;
     }
 }

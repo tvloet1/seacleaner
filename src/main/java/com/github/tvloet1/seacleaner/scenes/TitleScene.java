@@ -6,6 +6,7 @@ import com.github.hanyaeger.api.entities.impl.TextEntity;
 import com.github.hanyaeger.api.scenes.StaticScene;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.buttons.MusicButton;
+import com.github.tvloet1.seacleaner.entities.buttons.SoundEffectsButton;
 import com.github.tvloet1.seacleaner.entities.buttons.StartButton;
 
 import javafx.scene.paint.Color;
@@ -34,8 +35,10 @@ public class TitleScene extends StaticScene {
 		var startButton = new StartButton(new Coordinate2D(getWidth() / 2, getHeight() * 0.5), seacleaner);
 		startButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
 		addEntity(startButton);
-		var musicButton = new MusicButton(new Coordinate2D(getWidth() * 0.85, 5), seacleaner);
+		var musicButton = new MusicButton(new Coordinate2D(getWidth() * 0.70, 5), seacleaner);
 		addEntity(musicButton);
+		var soundEffectsButton = new SoundEffectsButton(new Coordinate2D(getWidth() * 0.70, 35), seacleaner);
+		addEntity(soundEffectsButton);
 	}
 
 }
