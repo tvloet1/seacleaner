@@ -7,13 +7,13 @@ import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.SceneBorderTouchingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
-import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
+import com.github.tvloet1.seacleaner.entities.modifiers.Modify;
 import com.github.tvloet1.seacleaner.entities.text.ScoreText;
 import javafx.geometry.Bounds;
 import javafx.scene.input.KeyCode;
@@ -25,42 +25,45 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 
 	private int score;
 
+	private int speed;
+
 	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, ScoreText scoreText) {
 		super("sprites/swimmingManv5.png", initialLocation, new Size(120, 240), 5, 2);
 		this.seacleaner = seacleaner;
 		this.scoreText = scoreText;
 		this.score = 0;
 		scoreText.setScoreText(score);
+		this.speed = 3;
 	}
 
 	@Override
 	public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
 		if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.DOWN)) {
-			setMotion(3, 45d);
+			setMotion(speed, 45d);
 			faceRight();
 		} else if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.UP)) {
-			setMotion(3, 135d);
+			setMotion(speed, 135d);
 			faceRight();
 		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.DOWN)) {
-			setMotion(3, 315d);
+			setMotion(speed, 315d);
 			faceLeft();
 		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.UP)) {
-			setMotion(3, 225d);
+			setMotion(speed, 225d);
 			faceLeft();
 		} else if (pressedKeys.contains(KeyCode.LEFT)) {
-			setMotion(3, 270d);
+			setMotion(speed, 270d);
 			faceLeft();
 		} else if (pressedKeys.contains(KeyCode.RIGHT)) {
-			setMotion(3, 90d);
+			setMotion(speed, 90d);
 			faceRight();
 		} else if (pressedKeys.contains(KeyCode.UP)) {
-			setMotion(3, 180d);
+			setMotion(speed, 180d);
 		} else if (pressedKeys.contains(KeyCode.DOWN)) {
-			setMotion(3, 0d);
+			setMotion(speed, 0d);
 		} else if (pressedKeys.contains(KeyCode.I)) {
-			increaseBagSize();
+			increaseSpeed();
 		} else if (pressedKeys.contains(KeyCode.D)) {
-			decreaseBagSize();
+			decreaseSpeed();
 		} else {
 			setSpeed(0);
 		}
@@ -126,6 +129,9 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			var anchorLocation = determineAnchorDirection(getBoundingBox(), collidingObject.getBoundingBox(), getDirection(), getAnchorLocation());
 			setSpeed(0);
 			setAnchorLocation(anchorLocation);
+		} else if (collidingObject instanceof Modify) {
+			System.out.println("GO" + ((Modify) collidingObject).execute());
+			changeSpeed(((Modify) collidingObject).execute());
 		}
 		if(score >= 10) {
 			seacleaner.setActiveScene(2);
@@ -169,7 +175,27 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		return anchorLocation;
 	}
 
-	private void increaseScore (int value) {
+	private void increaseScore(int value) {
 		score = score + value;
+	}
+
+	private void increaseSpeed(){
+		if(speed <= 5) {
+			speed++;
+		}
+	}
+
+	private void decreaseSpeed(){
+		if(speed > 1) {
+			speed--;
+		}
+	}
+
+	private void changeSpeed(int value) {
+		if (value > 0) {
+			increaseSpeed();
+		} else {
+			decreaseSpeed();
+		}
 	}
 }
