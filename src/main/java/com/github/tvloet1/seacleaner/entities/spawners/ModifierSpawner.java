@@ -9,18 +9,20 @@ import java.util.Random;
 
 public class ModifierSpawner extends EntitySpawner {
     private double sceneWidth;
-    public ModifierSpawner(double sceneWidth) {
+    private final boolean SoundEffectsOn;
+    public ModifierSpawner(double sceneWidth, boolean SoundEffectsOn) {
         super(3000);
         this.sceneWidth = sceneWidth;
+        this.SoundEffectsOn = SoundEffectsOn;
     }
 
     @Override
     protected void spawnEntities() {
         int val = new Random().nextInt(2);
         if(val==0){
-            spawn(new SpeedBuff(randomLocation()));
+            spawn(new SpeedBuff(randomLocation(), SoundEffectsOn));
         } else if (val==1) {
-            spawn(new SpeedNerf(randomLocation()));
+            spawn(new SpeedNerf(randomLocation(), SoundEffectsOn));
         }
     }
 
