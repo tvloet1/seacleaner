@@ -21,8 +21,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
 
     @Override
     public void setupScene() {
-        setBackgroundAudio("audio/behindEnemyLines.mp3");
-        setBackgroundAudioVolume(0.25);
+        setupMusic();
         setBackgroundImage("backgrounds/backgroundGame.jpg");
     }
 
@@ -43,6 +42,13 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
     @Override
     public void setupTileMaps() {
         addTileMap(new ObstacleTileMap());
+    }
+
+    private void setupMusic() {
+        if(seacleaner.getMusicOn()) {
+            setBackgroundAudio("audio/behindEnemyLines.mp3");
+            setBackgroundAudioVolume(0.25);
+        }
     }
 
 }
