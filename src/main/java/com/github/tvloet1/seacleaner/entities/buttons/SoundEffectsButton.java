@@ -21,6 +21,11 @@ public class SoundEffectsButton extends TextEntity implements MouseButtonPressed
         setFill(Color.ORANGE);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Change the display text for sound effects on to sound effects off and vice versa.
+     */
     private void setSoundEffectsText() {
         String soundEffects;
         if(seaCleaner.getSoundEffectsOn()) {
@@ -31,18 +36,33 @@ public class SoundEffectsButton extends TextEntity implements MouseButtonPressed
         setText("Sound effects: " + soundEffects);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Switches the sound effects on or off and updates the diplay.
+     */
     @Override
     public void onMouseButtonPressed(MouseButton mouseButton, Coordinate2D coordinate2D) {
         seaCleaner.switchSoundEffectsOn();
         setSoundEffectsText();
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Change the color of the text when the mouse exits the text.
+     */
     @Override
     public void onMouseExited() {
         setFill(Color.ORANGE);
         setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Change the color of the text when the mouse enters the text.
+     */
     @Override
     public void onMouseEntered() {
         setFill(Color.YELLOW);

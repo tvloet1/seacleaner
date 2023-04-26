@@ -22,17 +22,32 @@ public class PlayAgainButton extends TextEntity implements MouseButtonPressedLis
         this.seacleaner = seacleaner;
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Sets the value for active scene to 1.
+     */
     @Override
     public void onMouseButtonPressed(MouseButton mouseButton, Coordinate2D coordinate2D) {
         seacleaner.setActiveScene(1);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Change the color of the text when the mouse enters the text.
+     */
     @Override
     public void onMouseEntered() {
         setFill(Color.YELLOW);
         setCursor(Cursor.HAND);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Change the color of the text when the mouse exits the text.
+     */
     @Override
     public void onMouseExited() {
         setFill(Color.ORANGE);

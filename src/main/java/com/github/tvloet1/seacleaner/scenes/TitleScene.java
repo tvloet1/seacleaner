@@ -20,11 +20,20 @@ public class TitleScene extends StaticScene {
 		this.seacleaner = seacleaner;
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 04-APR-2023
+	 * Setup background image.
+	 */
 	@Override
 	public void setupScene() {
 		setBackgroundImage("backgrounds/backgroundStart.jpg");
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 */
 	@Override
 	public void setupEntities() {
 		var seaCleanerText = new TextEntity(new Coordinate2D(getWidth() / 2, getHeight() *0.4), "Sea Cleaner");

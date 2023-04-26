@@ -21,6 +21,11 @@ public class MusicButton extends TextEntity implements MouseButtonPressedListene
         setFill(Color.ORANGE);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Change the display text for music on to music of and vice versa.
+     */
     private void setMusicText() {
         String music;
         if(seaCleaner.getMusicOn()) {
@@ -31,18 +36,33 @@ public class MusicButton extends TextEntity implements MouseButtonPressedListene
         setText("Music: " + music);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Switches the music on or off and updates the diplay.
+     */
     @Override
     public void onMouseButtonPressed(MouseButton mouseButton, Coordinate2D coordinate2D) {
         seaCleaner.switchMusic();
         setMusicText();
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Change the color of the text when the mouse exits the text.
+     */
     @Override
     public void onMouseExited() {
         setFill(Color.ORANGE);
         setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Change the color of the text when the mouse enters the text.
+     */
     @Override
     public void onMouseEntered() {
         setFill(Color.YELLOW);

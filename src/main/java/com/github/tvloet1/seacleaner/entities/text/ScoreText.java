@@ -13,6 +13,12 @@ public class ScoreText extends TextEntity {
         setFill(Color.ORANGE);
     }
 
+    /**
+     * @author Tom Vloet
+     * @param score integer used to change the text of this text entity.
+     * @since 04-APR-2023
+     */
+
     public void setScoreText(int score) {
         setText("Score: " + score);
     }

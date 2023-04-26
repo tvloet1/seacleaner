@@ -26,18 +26,33 @@ public class StartButton extends TextEntity
 		this.seacleaner = seacleaner;
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 04-APR-2023
+	 * Change the color of the text when the mouse exits the text.
+	 */
 	@Override
 	public void onMouseExited() {
 		setFill(Color.ORANGE);
 		setCursor(Cursor.DEFAULT);
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 04-APR-2023
+	 * Change the color of the text when the mouse enters the text.
+	 */
 	@Override
 	public void onMouseEntered() {
 		setFill(Color.YELLOW);
 		setCursor(Cursor.HAND);
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 04-APR-2023
+	 * Play sound and move to next scene.
+	 */
 	@Override
 	public void onMouseButtonPressed(MouseButton button, Coordinate2D coordinate2d) {
 		playSound();
@@ -45,6 +60,11 @@ public class StartButton extends TextEntity
 		seacleaner.setActiveScene(1);
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 * Instantiates sound-clip and plays it
+	 */
 	private void playSound() {
 		if (seacleaner.getSoundEffectsOn()) {
 			var startGameSound = new SoundClip("audio/soundStartGame.wav");

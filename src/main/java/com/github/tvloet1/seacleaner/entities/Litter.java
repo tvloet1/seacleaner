@@ -19,6 +19,11 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
         setMotion(speed,0d);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Plays sound and removes the litter
+     */
     @Override
     public void onCollision(Collider collidingObject) {
         if(collidingObject instanceof Swimmer) {
@@ -27,14 +32,30 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
         }
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Returns the value of the piece of litter.
+     */
     public int getValue() {
         return value;
     }
+
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Removes the modifier when it crosses the screen border
+     */
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Instantiates sound-clip and plays it
+     */
     private void playSound() {
         if (soundEffects) {
             var pickUpTrashSound = new SoundClip("audio/soundPickUpTrash.wav");
