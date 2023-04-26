@@ -36,6 +36,11 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		this.speed = 3;
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 04-APR-2023
+	 * Set motion and direction of the swimmer depending on the combination of pressed keys.
+	 */
 	@Override
 	public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
 		if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.DOWN)) {
@@ -68,7 +73,11 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			setSpeed(0);
 		}
 	}
-
+	/**
+	 * @author Tom Vloet
+	 * @since 18-APR-2023
+	 * Increases frame index by 2 if it is less than 8. This changes the bag size without changing the direction the swimmer is facing.
+	 */
 	private void increaseBagSize() {
 		var currentFrameIndex = getCurrentFrameIndex();
 		if(currentFrameIndex < 8) {
@@ -76,13 +85,11 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		}
 	}
 
-	private void decreaseBagSize() {
-		var currentFrameIndex = getCurrentFrameIndex();
-		if(currentFrameIndex > 1) {
-			setCurrentFrameIndex(currentFrameIndex-2);
-		}
-	}
-
+	/**
+	 * @author Tom Vloet
+	 * @since 18-APR-2023
+	 * Changes the frame index to make the swimmer face right, without changing the bag size.
+	 */
 	private void faceRight() {
 		var currentFrameIndex = getCurrentFrameIndex();
 		if(currentFrameIndex % 2 !=0) {
@@ -90,6 +97,11 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		}
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 18-APR-2023
+	 * Changes the frame index to make the swimmer face left, without changing the bag size.
+	 */
 	private void faceLeft() {
 		var currentFrameIndex = getCurrentFrameIndex();
 		if(currentFrameIndex % 2 ==0) {
@@ -97,6 +109,11 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		}
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 04-APR-2023
+	 * Stop swimmer from leaving the screen.
+	 */
 	@Override
 	public void notifyBoundaryTouching(SceneBorder border) {
 		setSpeed(0);
@@ -117,17 +134,27 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		}
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 16-APR-2023
+	 * Depending on the collidingObject perform different behaviors.
+	 * Litter = pick up and score points
+	 * SeaUrchin = lose game, move to next scene
+	 * Rock = do not pass through, anchor swimmer to previous location
+	 * Modify = execute the modifier, apply to the swimmer
+	 * Move to next scene if player wins
+	 */
 	@Override
 	public void onCollision(Collider collidingObject) {
 		if (collidingObject instanceof Litter){
 			increaseScore(((Litter) collidingObject).getValue());
-			scoreText.setScoreText(score);
 			increaseBagSize();
+			scoreText.setScoreText(score);
 		} else if (collidingObject instanceof SeaUrchin) {
 			seacleaner.endMusicScene();
 			seacleaner.setActiveScene(3);
 		} else if (collidingObject instanceof Rock) {
-			var anchorLocation = determineAnchorDirection(getBoundingBox(), collidingObject.getBoundingBox(), getDirection(), getAnchorLocation());
+			var anchorLocation = determineAnchorLocation(collidingObject.getBoundingBox());
 			setSpeed(0);
 			setAnchorLocation(anchorLocation);
 		} else if (collidingObject instanceof Modify) {
@@ -139,59 +166,84 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		}
 	}
 
-	private Coordinate2D determineAnchorDirection(Bounds swimmer, Bounds collidingObject, double direction, Coordinate2D anchorLocation) {
+	/**
+	 * @author Tom Vloet
+	 * @since 18-APR-2023
+	 * Determine location where the swimmer needs to be anchored to. (after colliding with rock for example)
+	 */
+	private Coordinate2D determineAnchorLocation(Bounds collidingObjectBounds) {
+		var swimmerBounds = getBoundingBox();
+		var direction = getDirection();
+		var anchorLocation = getAnchorLocation();
 		if (direction == 0d) {
-			return new Coordinate2D(anchorLocation.getX(),collidingObject.getMinY()-getHeight()-1);
+			return new Coordinate2D(anchorLocation.getX(),collidingObjectBounds.getMinY()-getHeight()-1);
 		} else if (direction == 180d) {
-			return new Coordinate2D(anchorLocation.getX(),collidingObject.getMaxY()+1);
+			return new Coordinate2D(anchorLocation.getX(),collidingObjectBounds.getMaxY()+1);
 		} else if (direction == 270d) {
-			return new Coordinate2D(collidingObject.getMaxX()+1,anchorLocation.getY());
+			return new Coordinate2D(collidingObjectBounds.getMaxX()+1,anchorLocation.getY());
 		} else if (direction == 90d) {
-			return new Coordinate2D(collidingObject.getMinX()-getWidth()-1,anchorLocation.getY());
+			return new Coordinate2D(collidingObjectBounds.getMinX()-getWidth()-1,anchorLocation.getY());
 		} else if(direction == 45d) {
-			if(swimmer.getMaxX() - collidingObject.getMinX() < swimmer.getMaxY() - collidingObject.getMinY()) {
-				return new Coordinate2D(collidingObject.getMinX() - getWidth() - 1, anchorLocation.getY());
+			if(swimmerBounds.getMaxX() - collidingObjectBounds.getMinX() < swimmerBounds.getMaxY() - collidingObjectBounds.getMinY()) {
+				return new Coordinate2D(collidingObjectBounds.getMinX() - getWidth() - 1, anchorLocation.getY());
 			} else {
-				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMinY()-getHeight()-1);
+				return new Coordinate2D(anchorLocation.getX(),collidingObjectBounds.getMinY()-getHeight()-1);
 			}
 		} else if(direction == 135d) {
-			if(swimmer.getMaxX() - collidingObject.getMinX() < collidingObject.getMaxY() - swimmer.getMinY()) {
-				return new Coordinate2D(collidingObject.getMinX()-getWidth()-1,anchorLocation.getY());
+			if(swimmerBounds.getMaxX() - collidingObjectBounds.getMinX() < collidingObjectBounds.getMaxY() - swimmerBounds.getMinY()) {
+				return new Coordinate2D(collidingObjectBounds.getMinX()-getWidth()-1,anchorLocation.getY());
 			} else {
-				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMaxY()+1);
+				return new Coordinate2D(anchorLocation.getX(),collidingObjectBounds.getMaxY()+1);
 			}
 		} else if (direction == 225d) {
-			if(collidingObject.getMaxX() - swimmer.getMinX() < collidingObject.getMaxY() - swimmer.getMinY()) {
-				return new Coordinate2D(collidingObject.getMaxX()+1,anchorLocation.getY());
+			if(collidingObjectBounds.getMaxX() - swimmerBounds.getMinX() < collidingObjectBounds.getMaxY() - swimmerBounds.getMinY()) {
+				return new Coordinate2D(collidingObjectBounds.getMaxX()+1,anchorLocation.getY());
 			} else {
-				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMaxY()+1);
+				return new Coordinate2D(anchorLocation.getX(),collidingObjectBounds.getMaxY()+1);
 			}
 		} else if (direction == 315d) {
-			if(swimmer.getMinX() - collidingObject.getMaxX() < collidingObject.getMinY() - swimmer.getMaxY()) {
-				return new Coordinate2D(anchorLocation.getX(),collidingObject.getMinY()-getHeight()-1);
+			if(swimmerBounds.getMinX() - collidingObjectBounds.getMaxX() < collidingObjectBounds.getMinY() - swimmerBounds.getMaxY()) {
+				return new Coordinate2D(anchorLocation.getX(),collidingObjectBounds.getMinY()-getHeight()-1);
 			} else {
-				return new Coordinate2D(collidingObject.getMaxX()+1,anchorLocation.getY());
+				return new Coordinate2D(collidingObjectBounds.getMaxX()+1,anchorLocation.getY());
 			}
 		}
 		return anchorLocation;
 	}
 
+
+	/**
+	 * @author Tom Vloet
+	 * @since 22-APR-2023
+	 */
 	private void increaseScore(int value) {
 		score = score + value;
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 */
 	private void increaseSpeed(){
 		if(speed <= 5) {
 			speed++;
 		}
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 */
 	private void decreaseSpeed(){
 		if(speed > 1) {
 			speed--;
 		}
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 */
 	private void changeSpeed(int value) {
 		if (value > 0) {
 			increaseSpeed();

@@ -22,18 +22,32 @@ public class QuitGameButton extends TextEntity implements MouseButtonPressedList
         setFont(Font.font("Courier New", FontWeight.BOLD, 30));
         this.seacleaner = seacleaner;
     }
-
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Closes the application.
+     */
     @Override
     public void onMouseButtonPressed(MouseButton mouseButton, Coordinate2D coordinate2D) {
         seacleaner.quit();
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Change the color of the text when the mouse enters the text.
+     */
     @Override
     public void onMouseEntered() {
         setFill(Color.YELLOW);
         setCursor(Cursor.HAND);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 16-APR-2023
+     * Change the color of the text when the mouse exits the text.
+     */
     @Override
     public void onMouseExited() {
         setFill(Color.ORANGE);

@@ -18,12 +18,21 @@ public class GameOverSceneWin extends StaticScene {
 		this.seacleaner = seacleaner;
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 * Setup music and set background image.
+	 */
 	@Override
 	public void setupScene() {
 		setupMusic();
 		setBackgroundImage("backgrounds/backgroundEndWin.jpg");
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 22-APR-2023
+	 */
 	@Override
 	public void setupEntities() {
 		var gameOverSceneWinText = new TextEntity(new Coordinate2D(getWidth() / 2, getHeight() *0.2), "You Win!");
@@ -43,6 +52,11 @@ public class GameOverSceneWin extends StaticScene {
 		addEntity(quitGameButton);
 	}
 
+	/**
+	 * @author Tom Vloet
+	 * @since 23-APR-2023
+	 * Depending on the seacleaner value for musicOn turn the music on.
+	 */
 	private void setupMusic() {
 		if(seacleaner.getMusicOn()) {
 			setBackgroundAudio("audio/musicEndScene.wav");

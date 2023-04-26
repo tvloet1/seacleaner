@@ -16,6 +16,11 @@ public class ModifierSpawner extends EntitySpawner {
         this.SoundEffectsOn = SoundEffectsOn;
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Spawns Modifiers at random x position, but always 0 y position.
+     */
     @Override
     protected void spawnEntities() {
         int val = new Random().nextInt(2);
@@ -26,6 +31,12 @@ public class ModifierSpawner extends EntitySpawner {
         }
     }
 
+    /**
+     * @author Tom Vloet
+     * @return Coordinate2D x and y coordinate
+     * @since 23-APR-2023
+     * Fixed y position of 0 and a random x position (within the boundaries of the screenwidth)
+     */
     private Coordinate2D randomLocation() {
         double x = new Random().nextInt((int) sceneWidth);
         return new Coordinate2D(x, 0);

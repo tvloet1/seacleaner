@@ -20,6 +20,11 @@ public abstract class Modifier extends DynamicSpriteEntity implements Modify, Co
         setMotion(2,0d);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Plays sound and removes the modifier
+     */
     @Override
     public void onCollision(Collider collidingObject) {
         if(collidingObject instanceof Swimmer) {
@@ -27,11 +32,21 @@ public abstract class Modifier extends DynamicSpriteEntity implements Modify, Co
             remove();
         }
     }
+
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Removes the modifier when it crosses the screen border
+     */
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
     }
-
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Instantiates sound-clip and plays it
+     */
     private void playSound() {
         if (soundEffectsOn) {
             var pickUpTrashSound = new SoundClip(soundClip);
