@@ -1,24 +1,24 @@
 package com.github.tvloet1.seacleaner.entities.buttons;
 
 import com.github.hanyaeger.api.Coordinate2D;
-import com.github.hanyaeger.api.entities.impl.TextEntity;
-import com.github.hanyaeger.api.userinput.MouseButtonPressedListener;
-import com.github.hanyaeger.api.userinput.MouseEnterListener;
-import com.github.hanyaeger.api.userinput.MouseExitListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
-import javafx.scene.Cursor;
-import javafx.scene.input.MouseButton;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
-public class SoundEffectsButton extends TextEntity implements MouseButtonPressedListener, MouseEnterListener, MouseExitListener {
-    private SeaCleaner seaCleaner;
-    public SoundEffectsButton(Coordinate2D initialLocation, SeaCleaner seaCleaner) {
-        super(initialLocation,"Sound effects: On");
-        this.seaCleaner = seaCleaner;
-        setFont(Font.font("Courier New", FontWeight.BOLD, 30));
-        setFill(Color.ORANGE);
+public class SoundEffectsButton extends MenuButton {
+
+
+    public SoundEffectsButton(Coordinate2D initialLocation, String text, int fontSize, SeaCleaner seaCleaner) {
+        super(initialLocation, text, fontSize, seaCleaner);
+    }
+
+    /**
+     * @author Tom Vloet
+     * @since 30-MAY-2023
+     * Determines what happens when the menu button is pressed.
+     */
+    @Override
+    public void run() {
+        seaCleaner.switchSoundEffectsOn();
+        setSoundEffectsText();
     }
 
     /**
@@ -34,38 +34,5 @@ public class SoundEffectsButton extends TextEntity implements MouseButtonPressed
             soundEffects = "off";
         }
         setText("Sound effects: " + soundEffects);
-    }
-
-    /**
-     * @author Tom Vloet
-     * @since 23-APR-2023
-     * Switches the sound effects on or off and updates the diplay.
-     */
-    @Override
-    public void onMouseButtonPressed(MouseButton mouseButton, Coordinate2D coordinate2D) {
-        seaCleaner.switchSoundEffectsOn();
-        setSoundEffectsText();
-    }
-
-    /**
-     * @author Tom Vloet
-     * @since 23-APR-2023
-     * Change the color of the text when the mouse exits the text.
-     */
-    @Override
-    public void onMouseExited() {
-        setFill(Color.ORANGE);
-        setCursor(Cursor.DEFAULT);
-    }
-
-    /**
-     * @author Tom Vloet
-     * @since 23-APR-2023
-     * Change the color of the text when the mouse enters the text.
-     */
-    @Override
-    public void onMouseEntered() {
-        setFill(Color.YELLOW);
-        setCursor(Cursor.HAND);
     }
 }

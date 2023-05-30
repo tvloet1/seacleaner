@@ -41,12 +41,12 @@ public class GameOverSceneWin extends StaticScene {
 		gameOverSceneWinText.setFont(Font.font("Courier New", FontWeight.BOLD, 80));
 		addEntity(gameOverSceneWinText);
 		var playAgainButton = new PlayAgainButton(
-				new Coordinate2D(getWidth() / 2,getHeight() *0.4),seacleaner
+				new Coordinate2D(getWidth() / 2,getHeight() *0.4),"Play again", 30 ,seacleaner
 		);
 		playAgainButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
 		addEntity(playAgainButton);
 		var quitGameButton = new QuitGameButton(
-				new Coordinate2D(getWidth() / 2,getHeight() *0.5),seacleaner
+				new Coordinate2D(getWidth() / 2,getHeight() *0.5),"Quit game", 30, seacleaner
 		);
 		quitGameButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
 		addEntity(quitGameButton);

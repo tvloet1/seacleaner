@@ -6,8 +6,8 @@ import com.github.hanyaeger.api.entities.impl.TextEntity;
 import com.github.hanyaeger.api.scenes.StaticScene;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.buttons.MusicButton;
+import com.github.tvloet1.seacleaner.entities.buttons.PlayGameButton;
 import com.github.tvloet1.seacleaner.entities.buttons.SoundEffectsButton;
-import com.github.tvloet1.seacleaner.entities.buttons.StartButton;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -41,12 +41,12 @@ public class TitleScene extends StaticScene {
 		seaCleanerText.setFill(Color.ORANGE);
 		seaCleanerText.setFont(Font.font("Courier New", FontWeight.BOLD, 80));
 		addEntity(seaCleanerText);
-		var startButton = new StartButton(new Coordinate2D(getWidth() / 2, getHeight() * 0.5), seacleaner);
-		startButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
-		addEntity(startButton);
-		var musicButton = new MusicButton(new Coordinate2D(getWidth() * 0.70, 5), seacleaner);
+		var playGameButton = new PlayGameButton(new Coordinate2D(getWidth() / 2, getHeight() * 0.5),"Play Game" , 50,seacleaner);
+		playGameButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
+		addEntity(playGameButton);
+		var musicButton = new MusicButton(new Coordinate2D(getWidth() * 0.70, 5), "Music: On", 30, seacleaner);
 		addEntity(musicButton);
-		var soundEffectsButton = new SoundEffectsButton(new Coordinate2D(getWidth() * 0.70, 35), seacleaner);
+		var soundEffectsButton = new SoundEffectsButton(new Coordinate2D(getWidth() * 0.70, 35), "Sound effects: On", 30, seacleaner);
 		addEntity(soundEffectsButton);
 	}
 
