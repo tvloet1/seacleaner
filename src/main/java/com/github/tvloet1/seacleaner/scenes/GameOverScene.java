@@ -7,6 +7,7 @@ import com.github.hanyaeger.api.scenes.StaticScene;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.buttons.PlayAgainButton;
 import com.github.tvloet1.seacleaner.entities.buttons.QuitGameButton;
+import com.github.tvloet1.seacleaner.entities.text.MenuText;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -37,20 +38,11 @@ public class GameOverScene extends StaticScene {
      */
     @Override
     public void setupEntities() {
-        var gameOverSceneText = new TextEntity(new Coordinate2D(getWidth() / 2, getHeight() *0.2), determineText());
-        gameOverSceneText.setAnchorPoint(AnchorPoint.CENTER_CENTER);
-        gameOverSceneText.setFill(Color.ORANGE);
-        gameOverSceneText.setFont(Font.font("Courier New", FontWeight.BOLD, 80));
+        var gameOverSceneText = new MenuText(new Coordinate2D(getWidth() / 2, getHeight() *0.2), determineText(), 80);
         addEntity(gameOverSceneText);
-        var playAgainButton = new PlayAgainButton(
-                new Coordinate2D(getWidth() / 2,getHeight() *0.4),"Play again", 30 ,seacleaner
-        );
-        playAgainButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
+        var playAgainButton = new PlayAgainButton(new Coordinate2D(getWidth() / 2,getHeight() *0.4),"Play again", 30 ,seacleaner);
         addEntity(playAgainButton);
-        var quitGameButton = new QuitGameButton(
-                new Coordinate2D(getWidth() / 2,getHeight() *0.5),"Quit game", 30, seacleaner
-        );
-        quitGameButton.setAnchorPoint(AnchorPoint.CENTER_CENTER);
+        var quitGameButton = new QuitGameButton(new Coordinate2D(getWidth() / 2,getHeight() *0.5),"Quit game", 30, seacleaner);
         addEntity(quitGameButton);
     }
 

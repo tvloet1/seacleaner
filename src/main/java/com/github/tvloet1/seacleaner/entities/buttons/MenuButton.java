@@ -1,5 +1,6 @@
 package com.github.tvloet1.seacleaner.entities.buttons;
 
+import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.entities.impl.TextEntity;
 import com.github.hanyaeger.api.userinput.MouseButtonPressedListener;
@@ -14,10 +15,11 @@ import javafx.scene.text.FontWeight;
 
 public abstract class MenuButton extends TextEntity implements MouseButtonPressedListener, MouseEnterListener, MouseExitListener {
     protected SeaCleaner seaCleaner;
-    public MenuButton(Coordinate2D initialLocation, String text, int fontSize, SeaCleaner seaCleaner) {
+    public MenuButton(Coordinate2D initialLocation, String text, int fontSize, AnchorPoint anchorPoint, SeaCleaner seaCleaner) {
         super(initialLocation, text);
         setFill(Color.ORANGE);
         setFont(Font.font("Courier New", FontWeight.BOLD, fontSize));
+        setAnchorPoint(anchorPoint);
         this.seaCleaner = seaCleaner;
     }
 
