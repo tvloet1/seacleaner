@@ -1,6 +1,9 @@
 package com.github.tvloet1.seacleaner.entities;
 
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.entities.Collided;
@@ -10,6 +13,7 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
+import com.github.tvloet1.seacleaner.entities.enemies.CollidingEnemy;
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
 import com.github.tvloet1.seacleaner.entities.modifiers.Modify;
@@ -22,6 +26,9 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	private SeaCleaner seacleaner;
 	private GameText scoreText;
 	private GameText healthText;
+	private boolean isDamageCooldown;
+	private Timer damageCooldownTimer;
+	private static int cooldownDuration = 1000; // 1 seconds
 	private int score;
 	private int health;
 	private int speed;
@@ -35,6 +42,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		scoreText.setTextValue(score);
 		healthText.setTextValue(health);
 		this.speed = 3;
+		this.isDamageCooldown = false;
 	}
 
 	/**
@@ -151,13 +159,15 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			increaseScore(((Litter) collidingObject).getValue());
 			increaseBagSize();
 			scoreText.setTextValue(score);
-		} else if (collidingObject instanceof SeaUrchin) {
-			decreaseHealth(1);
-			healthText.setTextValue(health);
-		} else if (collidingObject instanceof Rock) {
+		} else if (collidingObject instanceof SeaUrchin || collidingObject instanceof Rock) {
 			var anchorLocation = determineAnchorLocation(collidingObject.getBoundingBox());
 			setSpeed(0);
 			setAnchorLocation(anchorLocation);
+			if(collidingObject instanceof SeaUrchin) {
+				takeDamage(10);
+			}
+		} else if (collidingObject instanceof CollidingEnemy) {
+			interactWithEnemy((CollidingEnemy) collidingObject);
 		} else if (collidingObject instanceof Modify) {
 			changeSpeed(((Modify) collidingObject).execute());
 		}
@@ -224,8 +234,15 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	private void increaseScore(int value) {
 		score = score + value;
 	}
-	private void decreaseHealth(int value) {
-		health = health - value;
+	public void takeDamage(int damage) {
+		if (!isDamageCooldown) {
+			health -= damage;
+			healthText.setTextValue(health);
+			startDamageCooldown();
+		}
+	}
+	public void interactWithEnemy(CollidingEnemy collidingEnemy) {
+		collidingEnemy.attack(this);
 	}
 
 	/**
@@ -258,5 +275,18 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		} else {
 			decreaseSpeed();
 		}
+	}
+	private void startDamageCooldown() {
+		isDamageCooldown = true;
+		// Create and schedule the damage cooldown timer
+		damageCooldownTimer = new Timer();
+		damageCooldownTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				// Reset the damage cooldown flag after the cooldown duration
+				isDamageCooldown = false;
+				damageCooldownTimer.cancel();
+			}
+		}, cooldownDuration);
 	}
 }

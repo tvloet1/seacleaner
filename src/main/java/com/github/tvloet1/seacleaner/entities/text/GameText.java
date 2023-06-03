@@ -7,7 +7,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class GameText extends TextEntity {
-    private static String text;
+    private String text;
     public GameText(Coordinate2D initialLocation, String text) {
         super(initialLocation, text);
         this.text = text;
