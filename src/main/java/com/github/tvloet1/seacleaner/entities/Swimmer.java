@@ -10,29 +10,30 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
-
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
 import com.github.tvloet1.seacleaner.entities.modifiers.Modify;
-import com.github.tvloet1.seacleaner.entities.text.ScoreText;
+import com.github.tvloet1.seacleaner.entities.text.GameText;
 import javafx.geometry.Bounds;
 import javafx.scene.input.KeyCode;
 
 public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBorderTouchingWatcher, Collider, Collided {
 
 	private SeaCleaner seacleaner;
-	private ScoreText scoreText;
-
+	private GameText scoreText;
+	private GameText healthText;
 	private int score;
-
+	private int health;
 	private int speed;
-
-	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, ScoreText scoreText) {
+	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, GameText scoreText, GameText healthText) {
 		super("sprites/swimmingManv5.png", initialLocation, new Size(120, 240), 5, 2);
 		this.seacleaner = seacleaner;
 		this.scoreText = scoreText;
+		this.healthText = healthText;
 		this.score = 0;
-		scoreText.setScoreText(score);
+		this.health = 100;
+		scoreText.setTextValue(score);
+		healthText.setTextValue(health);
 		this.speed = 3;
 	}
 
@@ -149,10 +150,10 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		if (collidingObject instanceof Litter){
 			increaseScore(((Litter) collidingObject).getValue());
 			increaseBagSize();
-			scoreText.setScoreText(score);
+			scoreText.setTextValue(score);
 		} else if (collidingObject instanceof SeaUrchin) {
-			seacleaner.endMusicScene();
-			seacleaner.setActiveScene(3);
+			decreaseHealth(1);
+			healthText.setTextValue(health);
 		} else if (collidingObject instanceof Rock) {
 			var anchorLocation = determineAnchorLocation(collidingObject.getBoundingBox());
 			setSpeed(0);
@@ -163,6 +164,10 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		if(score >= 10) {
 			seacleaner.endMusicScene();
 			seacleaner.setActiveScene(2);
+		}
+		if(health <= 0) {
+			seacleaner.endMusicScene();
+			seacleaner.setActiveScene(3);
 		}
 	}
 
@@ -218,6 +223,9 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	 */
 	private void increaseScore(int value) {
 		score = score + value;
+	}
+	private void decreaseHealth(int value) {
+		health = health - value;
 	}
 
 	/**

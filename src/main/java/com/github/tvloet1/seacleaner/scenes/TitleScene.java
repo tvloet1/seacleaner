@@ -1,6 +1,5 @@
 package com.github.tvloet1.seacleaner.scenes;
 
-import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.scenes.StaticScene;
 import com.github.tvloet1.seacleaner.SeaCleaner;

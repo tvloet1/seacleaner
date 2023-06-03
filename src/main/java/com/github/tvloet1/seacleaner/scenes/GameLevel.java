@@ -9,7 +9,7 @@ import com.github.tvloet1.seacleaner.entities.Swimmer;
 import com.github.tvloet1.seacleaner.entities.map.ObstacleTileMap;
 import com.github.tvloet1.seacleaner.entities.spawners.LitterSpawner;
 import com.github.tvloet1.seacleaner.entities.spawners.ModifierSpawner;
-import com.github.tvloet1.seacleaner.entities.text.ScoreText;
+import com.github.tvloet1.seacleaner.entities.text.GameText;
 
 public class GameLevel extends DynamicScene implements EntitySpawnerContainer, TileMapContainer {
 
@@ -36,9 +36,11 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
      */
     @Override
     public void setupEntities() {
-        var scoreText = new ScoreText(new Coordinate2D(5, 5));
+        var scoreText = new GameText(new Coordinate2D(5, 5), "Score");
         addEntity(scoreText);
-        var swimmer = new Swimmer(new Coordinate2D(500, 150), seacleaner, scoreText);
+        var healthText = new GameText(new Coordinate2D(5, 35), "Health");
+        addEntity(healthText);
+        var swimmer = new Swimmer(new Coordinate2D(500, 150), seacleaner, scoreText, healthText);
         addEntity(swimmer);
     }
 
