@@ -10,4 +10,5 @@ module seacleaner {
     opens sprites.litter;
     opens sprites.obstacles;
     opens sprites.modifiers;
+    opens sprites.enemies;
 }
