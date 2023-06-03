@@ -9,22 +9,35 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class CollidingEnemy extends DynamicSpriteEntity implements Collider, SceneBorderCrossingWatcher {
     protected int damage;
     protected Swimmer swimmer;
+    private boolean isAttackMoveCoolDown = false;
+    private Timer attackMoveCoolDownTimer;
+    private int attackMoveCoolDownDuration;
 
-    protected CollidingEnemy(String resource, Coordinate2D initialLocation, Size size, Swimmer swimmer, int damage, int speed) {
+    protected CollidingEnemy(String resource, Coordinate2D initialLocation, Size size, Swimmer swimmer, int damage, int speed, int attackMoveCoolDownDuration) {
         super(resource, initialLocation, size, 1, 2);
         this.damage = damage;
+        this.attackMoveCoolDownDuration = attackMoveCoolDownDuration;
         this.swimmer = swimmer;
         setSpeed(speed);
         goLeftOrRight();
     }
-    public abstract void attack(Swimmer swimmer);
+    public void attack(Swimmer swimmer) {
+        if(!isAttackMoveCoolDown){
+            attackMove();
+            applyDamage(swimmer);
+            startAttackMoveCoolDown();
+        }
+    };
     public void applyDamage(Swimmer swimmer) {
         swimmer.takeDamage(damage);
     }
+    public abstract void attackMove();
 
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
@@ -74,6 +87,19 @@ public abstract class CollidingEnemy extends DynamicSpriteEntity implements Coll
         } else {
             goRight();
         }
+    }
+    private void startAttackMoveCoolDown() {
+        isAttackMoveCoolDown = true;
+        // Create and schedule the damage CoolDown timer
+        attackMoveCoolDownTimer = new Timer();
+        attackMoveCoolDownTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Reset the damage CoolDown flag after the CoolDown duration
+                isAttackMoveCoolDown = false;
+                attackMoveCoolDownTimer.cancel();
+            }
+        }, attackMoveCoolDownDuration);
     }
 
 }

@@ -26,9 +26,6 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	private SeaCleaner seacleaner;
 	private GameText scoreText;
 	private GameText healthText;
-	private boolean isDamageCooldown;
-	private Timer damageCooldownTimer;
-	private static int cooldownDuration = 1000; // 1 seconds
 	private int score;
 	private int health;
 	private int speed;
@@ -42,7 +39,6 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		scoreText.setTextValue(score);
 		healthText.setTextValue(health);
 		this.speed = 3;
-		this.isDamageCooldown = false;
 	}
 
 	/**
@@ -235,11 +231,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		score = score + value;
 	}
 	public void takeDamage(int damage) {
-		if (!isDamageCooldown) {
-			health -= damage;
-			healthText.setTextValue(health);
-			startDamageCooldown();
-		}
+		health -= damage;
+		healthText.setTextValue(health);
 	}
 	public void interactWithEnemy(CollidingEnemy collidingEnemy) {
 		collidingEnemy.attack(this);
@@ -275,18 +268,5 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		} else {
 			decreaseSpeed();
 		}
-	}
-	private void startDamageCooldown() {
-		isDamageCooldown = true;
-		// Create and schedule the damage cooldown timer
-		damageCooldownTimer = new Timer();
-		damageCooldownTimer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				// Reset the damage cooldown flag after the cooldown duration
-				isDamageCooldown = false;
-				damageCooldownTimer.cancel();
-			}
-		}, cooldownDuration);
 	}
 }
