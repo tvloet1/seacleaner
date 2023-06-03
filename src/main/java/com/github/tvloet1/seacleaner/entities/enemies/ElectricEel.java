@@ -6,13 +6,12 @@ import com.github.tvloet1.seacleaner.entities.Swimmer;
 
 public class ElectricEel extends CollidingEnemy {
     public ElectricEel(Coordinate2D initialLocation, Swimmer swimmer, int damage, int speed) {
-        super("sprites/enemies/electricEel.png", initialLocation, new Size(150,20), swimmer, damage, speed);
+        super("sprites/enemies/electricEel.png", initialLocation, new Size(150,20), swimmer, damage, speed, 1000);
     }
 
     @Override
-    public void attack(Swimmer swimmer) {
+    public void attackMove() {
         System.out.println("I do "+ damage + " damage!");
         respawn();
-        applyDamage(swimmer);
     }
 }
