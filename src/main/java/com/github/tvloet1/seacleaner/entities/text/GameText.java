@@ -6,20 +6,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class ScoreText extends TextEntity {
-    public ScoreText(Coordinate2D initialLocation) {
-        super(initialLocation);
+public class GameText extends TextEntity {
+    private static String text;
+    public GameText(Coordinate2D initialLocation, String text) {
+        super(initialLocation, text);
+        this.text = text;
         setFont(Font.font("Courier New", FontWeight.BOLD, 30));
         setFill(Color.ORANGE);
     }
-
-    /**
-     * @author Tom Vloet
-     * @param score integer used to change the text of this text entity.
-     * @since 04-APR-2023
-     */
-
-    public void setScoreText(int score) {
-        setText("Score: " + score);
+    public void setTextValue(int value) {
+        setText(text + ": " + value);
     }
 }
