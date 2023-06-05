@@ -2,7 +2,6 @@ package com.github.tvloet1.seacleaner.entities.enemies;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
-import com.github.tvloet1.seacleaner.entities.Swimmer;
 
 public class ElectricEel extends MovingEnemy {
     public ElectricEel(Coordinate2D initialLocation, int damage, int speed) {

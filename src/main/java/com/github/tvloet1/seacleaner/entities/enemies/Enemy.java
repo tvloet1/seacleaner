@@ -13,8 +13,8 @@ public abstract class Enemy extends DynamicSpriteEntity implements Collider {
     private boolean isAttackMoveCoolDown = false;
     private Timer attackMoveCoolDownTimer;
     private final int attackMoveCoolDownDuration;
-    protected Enemy(String resource, Coordinate2D initialLocation, int damage, int attackMoveCoolDownDuration) {
-        super(resource, initialLocation);
+    protected Enemy(String resource, Coordinate2D initialLocation, Size size, int damage, int attackMoveCoolDownDuration) {
+        super(resource, initialLocation, size);
         this.damage = damage;
         this.attackMoveCoolDownDuration = attackMoveCoolDownDuration;
     }

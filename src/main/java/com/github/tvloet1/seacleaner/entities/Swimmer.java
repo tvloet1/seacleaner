@@ -11,6 +11,7 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
+import com.github.tvloet1.seacleaner.entities.enemies.Enemy;
 import com.github.tvloet1.seacleaner.entities.enemies.MovingEnemy;
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
@@ -160,8 +161,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			if(collidingObject instanceof SeaUrchin) {
 				takeDamage(10);
 			}
-		} else if (collidingObject instanceof MovingEnemy) {
-			interactWithEnemy((MovingEnemy) collidingObject);
+		} else if (collidingObject instanceof Enemy) {
+			interactWithEnemy((Enemy) collidingObject);
 		} else if (collidingObject instanceof Modify) {
 			changeSpeed(((Modify) collidingObject).execute());
 		}
@@ -232,8 +233,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		health -= damage;
 		healthText.setTextValue(health);
 	}
-	public void interactWithEnemy(MovingEnemy movingEnemy) {
-		movingEnemy.attack(this);
+	public void interactWithEnemy(Enemy Enemy) {
+		Enemy.attack(this);
 	}
 
 	/**
