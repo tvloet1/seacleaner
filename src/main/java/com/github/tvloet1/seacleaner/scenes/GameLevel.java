@@ -7,7 +7,9 @@ import com.github.hanyaeger.api.scenes.TileMapContainer;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 import com.github.tvloet1.seacleaner.entities.enemies.ElectricEel;
-import com.github.tvloet1.seacleaner.entities.enemies.Pufferfish;
+import com.github.tvloet1.seacleaner.entities.enemies.PoisonPufferFish;
+import com.github.tvloet1.seacleaner.entities.enemies.ProjectileEnemy;
+import com.github.tvloet1.seacleaner.entities.enemies.PufferFish;
 import com.github.tvloet1.seacleaner.entities.map.ObstacleTileMap;
 import com.github.tvloet1.seacleaner.entities.spawners.LitterSpawner;
 import com.github.tvloet1.seacleaner.entities.spawners.ModifierSpawner;
@@ -44,9 +46,11 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
         addEntity(healthText);
         var swimmer = new Swimmer(new Coordinate2D(500, 150), seacleaner, scoreText, healthText);
         addEntity(swimmer);
-        var pufferfish = new Pufferfish(new Coordinate2D(1000, 150), swimmer, 25,2);
+        var pufferfish = new PufferFish(new Coordinate2D(1000, 150), 25,2);
         addEntity(pufferfish);
-        var electricEel = new ElectricEel(new Coordinate2D(350, 600), swimmer, 10,4);
+        var poisonPufferfish = new PoisonPufferFish(new Coordinate2D(500, 500), 25,2);
+        addEntity(poisonPufferfish);
+        var electricEel = new ElectricEel(new Coordinate2D(350, 600), 10, 4);
         addEntity(electricEel);
     }
 
