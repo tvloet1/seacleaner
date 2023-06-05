@@ -2,13 +2,13 @@ package com.github.tvloet1.seacleaner.scenes;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
+import com.github.hanyaeger.api.entities.YaegerEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 import com.github.tvloet1.seacleaner.entities.enemies.ElectricEel;
 import com.github.tvloet1.seacleaner.entities.enemies.PoisonPufferFish;
-import com.github.tvloet1.seacleaner.entities.enemies.ProjectileEnemy;
 import com.github.tvloet1.seacleaner.entities.enemies.PufferFish;
 import com.github.tvloet1.seacleaner.entities.map.ObstacleTileMap;
 import com.github.tvloet1.seacleaner.entities.spawners.LitterSpawner;
@@ -48,10 +48,14 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
         addEntity(swimmer);
         var pufferfish = new PufferFish(new Coordinate2D(1000, 150), 25,2);
         addEntity(pufferfish);
-        var poisonPufferfish = new PoisonPufferFish(new Coordinate2D(500, 500), 25,2);
+        var poisonPufferfish = new PoisonPufferFish(new Coordinate2D(500, 500), 25,2, this);
         addEntity(poisonPufferfish);
         var electricEel = new ElectricEel(new Coordinate2D(350, 600), 10, 4);
         addEntity(electricEel);
+    }
+
+    public void addEntityToCollection(YaegerEntity entity){
+        this.addEntity(entity);
     }
 
     /**

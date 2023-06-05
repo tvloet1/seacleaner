@@ -8,6 +8,9 @@ public class PufferFish extends MovingEnemy {
     public PufferFish(Coordinate2D initialLocation, int damage, int speed) {
         super("sprites/enemies/PufferFish.png", initialLocation, new Size(120,120), damage, 2000, speed);
     }
+    public PufferFish(String resource, Coordinate2D initialLocation, int damage, int speed) {
+        super(resource, initialLocation, new Size(120,120), damage, 2000, speed);
+    }
 
     @Override
     public void attackMove() {
