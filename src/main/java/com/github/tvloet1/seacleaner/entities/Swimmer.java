@@ -1,8 +1,6 @@
 package com.github.tvloet1.seacleaner.entities;
 
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
@@ -13,7 +11,7 @@ import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
-import com.github.tvloet1.seacleaner.entities.enemies.CollidingEnemy;
+import com.github.tvloet1.seacleaner.entities.enemies.MovingEnemy;
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
 import com.github.tvloet1.seacleaner.entities.modifiers.Modify;
@@ -162,8 +160,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			if(collidingObject instanceof SeaUrchin) {
 				takeDamage(10);
 			}
-		} else if (collidingObject instanceof CollidingEnemy) {
-			interactWithEnemy((CollidingEnemy) collidingObject);
+		} else if (collidingObject instanceof MovingEnemy) {
+			interactWithEnemy((MovingEnemy) collidingObject);
 		} else if (collidingObject instanceof Modify) {
 			changeSpeed(((Modify) collidingObject).execute());
 		}
@@ -234,8 +232,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		health -= damage;
 		healthText.setTextValue(health);
 	}
-	public void interactWithEnemy(CollidingEnemy collidingEnemy) {
-		collidingEnemy.attack(this);
+	public void interactWithEnemy(MovingEnemy movingEnemy) {
+		movingEnemy.attack(this);
 	}
 
 	/**
