@@ -4,8 +4,8 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
 import com.github.tvloet1.seacleaner.scenes.GameLevel;
 
-public class PoisonPufferFish extends PufferFish {
-    public PoisonPufferFish(Coordinate2D initialLocation, int damage, int speed, GameLevel gameLevel) {
+public class FreezePufferFish extends PufferFish {
+    public FreezePufferFish(Coordinate2D initialLocation, int damage, int speed, GameLevel gameLevel) {
         super("sprites/enemies/pufferFishGreen.png", initialLocation, damage, speed, gameLevel);
         fire();
     }
@@ -13,6 +13,6 @@ public class PoisonPufferFish extends PufferFish {
     @Override
     public void fire() {
         System.out.println("Pew pew!");
-        gameLevel.addEntityToCollection(new PoisonProjectile(getAnchorLocation(), new Size(25,25), randomDegreesDirection()));
+        gameLevel.addEntityToCollection(new FreezeProjectile(getAnchorLocation(), new Size(25,25), randomDegreesDirection(), 1000));
     }
 }

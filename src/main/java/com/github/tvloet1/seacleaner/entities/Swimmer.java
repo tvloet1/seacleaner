@@ -1,6 +1,8 @@
 package com.github.tvloet1.seacleaner.entities;
 
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
@@ -14,7 +16,7 @@ import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.enemies.Enemy;
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
-import com.github.tvloet1.seacleaner.entities.modifiers.Modifier;
+import com.github.tvloet1.seacleaner.entities.modifiers.ModifySwimmer;
 import com.github.tvloet1.seacleaner.entities.text.GameText;
 import javafx.geometry.Bounds;
 import javafx.scene.input.KeyCode;
@@ -24,16 +26,16 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	private SeaCleaner seacleaner;
 	private GameText scoreText;
 	private GameText healthText;
-	private int score;
-	private int health;
+	private boolean canMove = true;
+	private int score = 0;
+	private int health = 100;
 	private int speed;
+	private Timer freezeMovementTimer;
 	public Swimmer(Coordinate2D initialLocation, SeaCleaner seacleaner, GameText scoreText, GameText healthText) {
 		super("sprites/swimmingManv5.png", initialLocation, new Size(120, 240), 5, 2);
 		this.seacleaner = seacleaner;
 		this.scoreText = scoreText;
 		this.healthText = healthText;
-		this.score = 0;
-		this.health = 100;
 		scoreText.setTextValue(score);
 		healthText.setTextValue(health);
 		this.speed = 3;
@@ -46,30 +48,32 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	 */
 	@Override
 	public void onPressedKeysChange(Set<KeyCode> pressedKeys) {
-		if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.DOWN)) {
-			setMotion(speed, 45d);
-			faceRight();
-		} else if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.UP)) {
-			setMotion(speed, 135d);
-			faceRight();
-		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.DOWN)) {
-			setMotion(speed, 315d);
-			faceLeft();
-		} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.UP)) {
-			setMotion(speed, 225d);
-			faceLeft();
-		} else if (pressedKeys.contains(KeyCode.LEFT)) {
-			setMotion(speed, 270d);
-			faceLeft();
-		} else if (pressedKeys.contains(KeyCode.RIGHT)) {
-			setMotion(speed, 90d);
-			faceRight();
-		} else if (pressedKeys.contains(KeyCode.UP)) {
-			setMotion(speed, 180d);
-		} else if (pressedKeys.contains(KeyCode.DOWN)) {
-			setMotion(speed, 0d);
-		} else {
-			setSpeed(0);
+		if(canMove) {
+			if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.DOWN)) {
+				setMotion(speed, 45d);
+				faceRight();
+			} else if (pressedKeys.contains(KeyCode.RIGHT) & pressedKeys.contains(KeyCode.UP)) {
+				setMotion(speed, 135d);
+				faceRight();
+			} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.DOWN)) {
+				setMotion(speed, 315d);
+				faceLeft();
+			} else if (pressedKeys.contains(KeyCode.LEFT) & pressedKeys.contains(KeyCode.UP)) {
+				setMotion(speed, 225d);
+				faceLeft();
+			} else if (pressedKeys.contains(KeyCode.LEFT)) {
+				setMotion(speed, 270d);
+				faceLeft();
+			} else if (pressedKeys.contains(KeyCode.RIGHT)) {
+				setMotion(speed, 90d);
+				faceRight();
+			} else if (pressedKeys.contains(KeyCode.UP)) {
+				setMotion(speed, 180d);
+			} else if (pressedKeys.contains(KeyCode.DOWN)) {
+				setMotion(speed, 0d);
+			} else {
+				setSpeed(0);
+			}
 		}
 	}
 	/**
@@ -145,21 +149,19 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	 */
 	@Override
 	public void onCollision(Collider collidingObject) {
-		if (collidingObject instanceof Litter){
-			increaseScore(((Litter) collidingObject).getValue());
-			increaseBagSize();
-			scoreText.setTextValue(score);
-		} else if (collidingObject instanceof SeaUrchin || collidingObject instanceof Rock) {
+		if (collidingObject instanceof Enemy) {
+			interactWithEnemy((Enemy) collidingObject);
+		}
+		if (collidingObject instanceof ModifySwimmer) {
+			interactWithModifier((ModifySwimmer) collidingObject);
+		}
+		if (collidingObject instanceof SeaUrchin || collidingObject instanceof Rock) {
 			var anchorLocation = determineAnchorLocation(collidingObject.getBoundingBox());
 			setSpeed(0);
 			setAnchorLocation(anchorLocation);
 			if(collidingObject instanceof SeaUrchin) {
 				takeDamage(10);
 			}
-		} else if (collidingObject instanceof Enemy) {
-			interactWithEnemy((Enemy) collidingObject);
-		} else if (collidingObject instanceof Modifier) {
-			interactWithModifier(((Modifier) collidingObject));
 		}
 		if(score >= 10) {
 			seacleaner.endMusicScene();
@@ -221,8 +223,10 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	 * @author Tom Vloet
 	 * @since 22-APR-2023
 	 */
-	private void increaseScore(int value) {
-		score = score + value;
+	public void increaseScore(int points) {
+		score = score + points;
+		scoreText.setTextValue(score);
+		increaseBagSize();
 	}
 	public void takeDamage(int damage) {
 		health -= damage;
@@ -231,8 +235,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	public void interactWithEnemy(Enemy Enemy) {
 		Enemy.attack(this);
 	}
-	public void interactWithModifier(Modifier modifier) {
-		modifier.modify(this);
+	public void interactWithModifier(ModifySwimmer modifySwimmer) {
+		modifySwimmer.modify(this);
 	}
 
 	/**
@@ -250,5 +254,24 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	public void adjustHealth(int val){
 		health += val;
 		healthText.setTextValue(health);
+	}
+
+	public void freezeMovement(int ms) {
+		canMove = false;
+		startFreezeCoolDown(ms);
+		setSpeed(0);
+	}
+
+	private void startFreezeCoolDown(int ms) {
+		// Create and schedule the damage CoolDown timer
+		freezeMovementTimer = new Timer();
+		freezeMovementTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				// Reset the damage CoolDown flag after the CoolDown duration
+				canMove = true;
+				freezeMovementTimer.cancel();
+			}
+		}, ms);
 	}
 }

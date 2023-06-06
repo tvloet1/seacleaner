@@ -8,13 +8,14 @@ import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
+import com.github.tvloet1.seacleaner.entities.modifiers.ModifySwimmer;
 
-public class Litter extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher {
-    private int value;
+public class Litter extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher, ModifySwimmer {
+    private int points;
     private boolean soundEffects;
-    public Litter(String resource, Coordinate2D initialLocation, int speed, int value, boolean soundEffects) {
+    public Litter(String resource, Coordinate2D initialLocation, int speed, int points, boolean soundEffects) {
         super(resource, initialLocation, new Size(30, 60));
-        this.value = value;
+        this.points = points;
         this.soundEffects = soundEffects;
         setMotion(speed,0d);
     }
@@ -30,15 +31,6 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
             playSound();
             remove();
         }
-    }
-
-    /**
-     * @author Tom Vloet
-     * @since 23-APR-2023
-     * Returns the value of the piece of litter.
-     */
-    public int getValue() {
-        return value;
     }
 
     /**
@@ -61,5 +53,10 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
             var pickUpTrashSound = new SoundClip("audio/soundPickUpTrash.wav");
             pickUpTrashSound.play();
         }
+    }
+
+    @Override
+    public void modify(Swimmer swimmer) {
+        swimmer.increaseScore(points);
     }
 }
