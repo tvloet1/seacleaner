@@ -2,6 +2,8 @@ package com.github.tvloet1.seacleaner.entities.spawners;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.entities.EntitySpawner;
+import com.github.tvloet1.seacleaner.entities.modifiers.HealthBuff;
+import com.github.tvloet1.seacleaner.entities.modifiers.HealthNerf;
 import com.github.tvloet1.seacleaner.entities.modifiers.SpeedBuff;
 import com.github.tvloet1.seacleaner.entities.modifiers.SpeedNerf;
 
@@ -23,11 +25,15 @@ public class ModifierSpawner extends EntitySpawner {
      */
     @Override
     protected void spawnEntities() {
-        int val = new Random().nextInt(2);
+        int val = new Random().nextInt(4);
         if(val==0){
-            spawn(new SpeedBuff(randomLocation(), SoundEffectsOn));
+            spawn(new SpeedBuff(randomLocation(), SoundEffectsOn,1));
         } else if (val==1) {
-            spawn(new SpeedNerf(randomLocation(), SoundEffectsOn));
+            spawn(new SpeedNerf(randomLocation(), SoundEffectsOn,-1));
+        } else if (val==2) {
+            spawn(new HealthBuff(randomLocation(), SoundEffectsOn,60));
+        } else if (val==3) {
+            spawn(new HealthNerf(randomLocation(), SoundEffectsOn,-60));
         }
     }
 

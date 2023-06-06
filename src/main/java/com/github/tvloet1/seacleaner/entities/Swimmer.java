@@ -12,10 +12,9 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.enemies.Enemy;
-import com.github.tvloet1.seacleaner.entities.enemies.MovingEnemy;
 import com.github.tvloet1.seacleaner.entities.map.SeaUrchin;
 import com.github.tvloet1.seacleaner.entities.map.Rock;
-import com.github.tvloet1.seacleaner.entities.modifiers.Modify;
+import com.github.tvloet1.seacleaner.entities.modifiers.Modifier;
 import com.github.tvloet1.seacleaner.entities.text.GameText;
 import javafx.geometry.Bounds;
 import javafx.scene.input.KeyCode;
@@ -69,10 +68,6 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			setMotion(speed, 180d);
 		} else if (pressedKeys.contains(KeyCode.DOWN)) {
 			setMotion(speed, 0d);
-		} else if (pressedKeys.contains(KeyCode.I)) {
-			increaseSpeed();
-		} else if (pressedKeys.contains(KeyCode.D)) {
-			decreaseSpeed();
 		} else {
 			setSpeed(0);
 		}
@@ -163,8 +158,8 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			}
 		} else if (collidingObject instanceof Enemy) {
 			interactWithEnemy((Enemy) collidingObject);
-		} else if (collidingObject instanceof Modify) {
-			changeSpeed(((Modify) collidingObject).execute());
+		} else if (collidingObject instanceof Modifier) {
+			interactWithModifier(((Modifier) collidingObject));
 		}
 		if(score >= 10) {
 			seacleaner.endMusicScene();
@@ -236,36 +231,24 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	public void interactWithEnemy(Enemy Enemy) {
 		Enemy.attack(this);
 	}
-
-	/**
-	 * @author Tom Vloet
-	 * @since 23-APR-2023
-	 */
-	private void increaseSpeed(){
-		if(speed <= 5) {
-			speed++;
-		}
+	public void interactWithModifier(Modifier modifier) {
+		modifier.modify(this);
 	}
 
 	/**
 	 * @author Tom Vloet
-	 * @since 23-APR-2023
+	 * @since 06-JUN-2023
 	 */
-	private void decreaseSpeed(){
-		if(speed > 1) {
-			speed--;
-		}
+	public void adjustSpeed(int val){
+		speed += val;
 	}
 
 	/**
 	 * @author Tom Vloet
-	 * @since 23-APR-2023
+	 * @since 06-JUN-2023
 	 */
-	private void changeSpeed(int value) {
-		if (value > 0) {
-			increaseSpeed();
-		} else {
-			decreaseSpeed();
-		}
+	public void adjustHealth(int val){
+		health += val;
+		healthText.setTextValue(health);
 	}
 }
