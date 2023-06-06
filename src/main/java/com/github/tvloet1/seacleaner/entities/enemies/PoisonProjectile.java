@@ -5,7 +5,7 @@ import com.github.hanyaeger.api.Size;
 
 public class PoisonProjectile extends ProjectileEnemy {
     public PoisonProjectile(Coordinate2D initialLocation, Size size, double direction) {
-        super("sprites/enemies/fishSkeleton.jpeg", initialLocation, size, 20, 1, 5, direction);
+        super("sprites/enemies/bubbleGreen.png", initialLocation, size, 20, 1, 5, direction);
     }
 
     @Override
