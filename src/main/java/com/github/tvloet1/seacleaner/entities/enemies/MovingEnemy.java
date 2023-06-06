@@ -21,8 +21,8 @@ public abstract class MovingEnemy extends Enemy implements SceneBorderCrossingWa
     }
 
     protected void respawn() {
-        int xVal = new Random().nextInt(2);
-        int yPos = new Random().nextInt((int) (getSceneHeight()*0.8));
+        int xVal = new Random().nextInt(2); // 50 50 change to be 0 or 1
+        int yPos = new Random().nextInt((int) ((getSceneHeight()*0.8) + getSceneHeight()*0.2));
         double xPos;
         if(xVal == 0) {
             xPos = getSceneWidth();
