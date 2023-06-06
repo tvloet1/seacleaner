@@ -10,13 +10,16 @@ import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 
-public abstract class Modifier extends DynamicSpriteEntity implements Modify, Collided, Collider, SceneBorderCrossingWatcher {
+public abstract class Modifier extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher {
+
+    protected int modifierValue;
     private final String soundClip;
     private final boolean soundEffectsOn;
-    public Modifier(String resource, Coordinate2D initialLocation, String soundClip, boolean soundEffectsOn) {
+    public Modifier(String resource, Coordinate2D initialLocation, String soundClip, boolean soundEffectsOn, int modifierValue) {
         super(resource, initialLocation, new Size(30, 60));
         this.soundClip = soundClip;
         this.soundEffectsOn = soundEffectsOn;
+        this.modifierValue = modifierValue;
         setMotion(2,0d);
     }
 
@@ -49,8 +52,10 @@ public abstract class Modifier extends DynamicSpriteEntity implements Modify, Co
      */
     private void playSound() {
         if (soundEffectsOn) {
-            var pickUpTrashSound = new SoundClip(soundClip);
-            pickUpTrashSound.play();
+            var sound = new SoundClip(soundClip);
+            sound.play();
         }
     }
+
+    public abstract void modify(Swimmer swimmer);
 }
