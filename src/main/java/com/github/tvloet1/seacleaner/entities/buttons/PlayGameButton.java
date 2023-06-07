@@ -18,20 +18,8 @@ public class PlayGameButton extends MenuButton {
      */
     @Override
     public void run() {
-        playSound();
+        SoundManager.getInstance().playSound("audio/soundStartGame.wav");
         SoundManager.getInstance().endMusicScene();
         seaCleaner.setActiveScene(1);
-    }
-
-    /**
-     * @author Tom Vloet
-     * @since 23-APR-2023
-     * Instantiates sound-clip and plays it
-     */
-    private void playSound() {
-        if (seaCleaner.getSoundEffectsOn()) {
-            var startGameSound = new SoundClip("audio/soundStartGame.wav");
-            startGameSound.play();
-        }
     }
 }

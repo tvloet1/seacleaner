@@ -1,5 +1,6 @@
 package com.github.tvloet1.seacleaner.entities;
 
+import com.github.hanyaeger.api.media.SoundClip;
 import com.github.tvloet1.seacleaner.SeaCleaner;
 
 public class SoundManager {
@@ -57,5 +58,11 @@ public class SoundManager {
 
     public void endMusicScene() {
         seaCleaner.endMusicScene();
+    }
+    public void playSound(String soundClip) {
+        if (soundEffectsOn) {
+            var sound = new SoundClip(soundClip);
+            sound.play();
+        }
     }
 }

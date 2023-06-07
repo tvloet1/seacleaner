@@ -15,6 +15,12 @@ public abstract class MovingEnemy extends Enemy implements SceneBorderCrossingWa
         goLeftOrRight();
     }
 
+    protected MovingEnemy(String resource, Coordinate2D initialLocation, Size size, int damage, int attackMoveCoolDownDuration, int speed, String soundClip) {
+        super(resource, initialLocation, size, 1, 2, damage, attackMoveCoolDownDuration, soundClip);
+        setSpeed(speed);
+        goLeftOrRight();
+    }
+
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         respawn();

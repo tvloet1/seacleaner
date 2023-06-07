@@ -12,11 +12,9 @@ import com.github.tvloet1.seacleaner.entities.modifiers.ModifySwimmer;
 
 public class Litter extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher, ModifySwimmer {
     private int points;
-    private boolean soundEffects;
-    public Litter(String resource, Coordinate2D initialLocation, int speed, int points, boolean soundEffects) {
+    public Litter(String resource, Coordinate2D initialLocation, int speed, int points) {
         super(resource, initialLocation, new Size(30, 60));
         this.points = points;
-        this.soundEffects = soundEffects;
         setMotion(speed,0d);
     }
 
@@ -28,7 +26,7 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
     @Override
     public void onCollision(Collider collidingObject) {
         if(collidingObject instanceof Swimmer) {
-            playSound();
+            SoundManager.getInstance().playSound("audio/soundPickUpTrash.wav");
             remove();
         }
     }
@@ -41,18 +39,6 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
-    }
-
-    /**
-     * @author Tom Vloet
-     * @since 23-APR-2023
-     * Instantiates sound-clip and plays it
-     */
-    private void playSound() {
-        if (soundEffects) {
-            var pickUpTrashSound = new SoundClip("audio/soundPickUpTrash.wav");
-            pickUpTrashSound.play();
-        }
     }
 
     @Override

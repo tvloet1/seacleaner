@@ -11,11 +11,9 @@ import java.util.Random;
 
 public class ModifierSpawner extends EntitySpawner {
     private double sceneWidth;
-    private final boolean SoundEffectsOn;
-    public ModifierSpawner(double sceneWidth, boolean SoundEffectsOn) {
+    public ModifierSpawner(double sceneWidth) {
         super(3000);
         this.sceneWidth = sceneWidth;
-        this.SoundEffectsOn = SoundEffectsOn;
     }
 
     /**
@@ -27,13 +25,13 @@ public class ModifierSpawner extends EntitySpawner {
     protected void spawnEntities() {
         int val = new Random().nextInt(4);
         if(val==0){
-            spawn(new SpeedBuff(randomLocation(), SoundEffectsOn,1));
+            spawn(new SpeedBuff(randomLocation(),1));
         } else if (val==1) {
-            spawn(new SpeedNerf(randomLocation(), SoundEffectsOn,-1));
+            spawn(new SpeedNerf(randomLocation(),-1));
         } else if (val==2) {
-            spawn(new HealthBuff(randomLocation(), SoundEffectsOn,60));
+            spawn(new HealthBuff(randomLocation(),60));
         } else if (val==3) {
-            spawn(new HealthNerf(randomLocation(), SoundEffectsOn,-60));
+            spawn(new HealthNerf(randomLocation(),-60));
         }
     }
 

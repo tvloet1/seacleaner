@@ -6,7 +6,6 @@ import com.github.tvloet1.seacleaner.entities.SoundManager;
 import com.github.tvloet1.seacleaner.scenes.*;
 
 public class SeaCleaner extends YaegerGame {
-    private boolean soundEffectsOn;
     public static void main(String[] args){
         launch(args);
     }
@@ -15,7 +14,6 @@ public class SeaCleaner extends YaegerGame {
     public void setupGame() {
         setGameTitle("Sea Cleaner");
         setSize(new Size(1200, 800));
-        soundEffectsOn = true;
         SoundManager soundManager = SoundManager.getInstance();
         soundManager.setSeaCleaner(this);
         soundManager.setSoundEffectsOn(true);
@@ -44,13 +42,5 @@ public class SeaCleaner extends YaegerGame {
 
     public void turnOffMusic() {
         stopBackgroundAudio();
-    }
-
-    public boolean getSoundEffectsOn() {
-        return soundEffectsOn;
-    }
-
-    public void switchSoundEffectsOn() {
-        soundEffectsOn = !soundEffectsOn;
     }
 }

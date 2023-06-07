@@ -4,8 +4,8 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 
 public class SpeedNerf extends Modifier {
-    public SpeedNerf(Coordinate2D initialLocation, boolean SoundEffectsOn, int modifierValue) {
-        super("sprites/modifiers/speedNerf.png", initialLocation, "audio/speedNerf.mp3", SoundEffectsOn, modifierValue);
+    public SpeedNerf(Coordinate2D initialLocation, int modifierValue) {
+        super("sprites/modifiers/speedNerf.png", initialLocation, "audio/speedNerf.mp3", modifierValue);
     }
 
     @Override

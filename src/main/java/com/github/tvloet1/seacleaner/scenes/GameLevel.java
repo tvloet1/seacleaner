@@ -66,8 +66,8 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
      */
     @Override
     public void setupEntitySpawners() {
-        addEntitySpawner(new LitterSpawner(getWidth(),seacleaner.getSoundEffectsOn()));
-        addEntitySpawner(new ModifierSpawner(getWidth(),seacleaner.getSoundEffectsOn()));
+        addEntitySpawner(new LitterSpawner(getWidth()));
+        addEntitySpawner(new ModifierSpawner(getWidth()));
     }
 
     @Override
