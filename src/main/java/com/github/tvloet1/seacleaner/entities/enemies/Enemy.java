@@ -5,6 +5,7 @@ import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.media.SoundClip;
+import com.github.tvloet1.seacleaner.entities.SoundManager;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,7 +59,8 @@ public abstract class Enemy extends DynamicSpriteEntity implements Collider {
      * Instantiates sound-clip and plays it
      */
     private void playSound() {
-        if (soundEffectsOn) {
+        System.out.println("enemy " + SoundManager.getInstance().isSoundEffectsOn());
+        if (SoundManager.getInstance().isSoundEffectsOn()) {
             var sound = new SoundClip(soundClip);
             sound.play();
         }

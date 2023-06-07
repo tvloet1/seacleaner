@@ -3,6 +3,7 @@ package com.github.tvloet1.seacleaner.scenes;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.scenes.StaticScene;
 import com.github.tvloet1.seacleaner.SeaCleaner;
+import com.github.tvloet1.seacleaner.entities.SoundManager;
 import com.github.tvloet1.seacleaner.entities.buttons.PlayAgainButton;
 import com.github.tvloet1.seacleaner.entities.buttons.QuitGameButton;
 import com.github.tvloet1.seacleaner.entities.text.MenuText;
@@ -47,7 +48,7 @@ public class GameOverScene extends StaticScene {
      * Depending on the seaCleaner value for musicOn turn the music on.
      */
     private void setupMusic() {
-        if(seacleaner.getMusicOn()) {
+        if(SoundManager.getInstance().isMusicOn()) {
             setBackgroundAudio(determineMusic());
         }
     }

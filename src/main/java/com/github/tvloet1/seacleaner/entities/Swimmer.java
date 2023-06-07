@@ -164,11 +164,11 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 			}
 		}
 		if(score >= 10) {
-			seacleaner.endMusicScene();
+			SoundManager.getInstance().endMusicScene();
 			seacleaner.setActiveScene(2);
 		}
 		if(health <= 0) {
-			seacleaner.endMusicScene();
+			SoundManager.getInstance().endMusicScene();
 			seacleaner.setActiveScene(3);
 		}
 	}

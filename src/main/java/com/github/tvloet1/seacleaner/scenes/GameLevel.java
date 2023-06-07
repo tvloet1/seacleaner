@@ -6,6 +6,7 @@ import com.github.hanyaeger.api.entities.YaegerEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.hanyaeger.api.scenes.TileMapContainer;
 import com.github.tvloet1.seacleaner.SeaCleaner;
+import com.github.tvloet1.seacleaner.entities.SoundManager;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 import com.github.tvloet1.seacleaner.entities.enemies.*;
 import com.github.tvloet1.seacleaner.entities.map.ObstacleTileMap;
@@ -85,7 +86,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
      * Depending on the seacleaner value for musicOn turn the music on and lower volume.
      */
     private void setupMusic() {
-        if(seacleaner.getMusicOn()) {
+        if(SoundManager.getInstance().isMusicOn()) {
             setBackgroundAudio("audio/behindEnemyLines.mp3");
             setBackgroundAudioVolume(0.25);
         }

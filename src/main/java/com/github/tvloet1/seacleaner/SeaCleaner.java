@@ -2,10 +2,10 @@ package com.github.tvloet1.seacleaner;
 
 import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.YaegerGame;
+import com.github.tvloet1.seacleaner.entities.SoundManager;
 import com.github.tvloet1.seacleaner.scenes.*;
 
 public class SeaCleaner extends YaegerGame {
-    private boolean musicOn;
     private boolean soundEffectsOn;
     public static void main(String[] args){
         launch(args);
@@ -15,9 +15,11 @@ public class SeaCleaner extends YaegerGame {
     public void setupGame() {
         setGameTitle("Sea Cleaner");
         setSize(new Size(1200, 800));
-        musicOn = false;
         soundEffectsOn = true;
-        switchMusic();
+        SoundManager soundManager = SoundManager.getInstance();
+        soundManager.setSeaCleaner(this);
+        soundManager.setSoundEffectsOn(true);
+        soundManager.setMusicOn(false);
     }
 
     @Override
@@ -28,20 +30,19 @@ public class SeaCleaner extends YaegerGame {
         addScene(3, new GameOverScene(this,false));
     }
 
-    public boolean getMusicOn() {
-        return musicOn;
+    public void endMusicScene() {
+        stopBackgroundAudio();
     }
 
-    public void switchMusic() {
-        musicOn = !musicOn;
-        if(musicOn) {
-            setBackgroundAudio("audio/behindEnemyLines.mp3");
-            setBackgroundAudioVolume(0.25);
-        }else {
-            stopBackgroundAudio();
-        }
+    public void turnOnMusic(String audio) {
+        setBackgroundAudio(audio);
     }
-    public void endMusicScene() {
+
+    public void changeVolume(double volume)  {
+        setBackgroundAudioVolume(volume);
+    }
+
+    public void turnOffMusic() {
         stopBackgroundAudio();
     }
 
