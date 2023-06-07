@@ -4,8 +4,8 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 
 public class HealthNerf extends Modifier {
-    public HealthNerf(Coordinate2D initialLocation, boolean soundEffectsOn, int modifierValue) {
-        super("sprites/modifiers/healthNerf.png", initialLocation, "audio/speedNerf.mp3", soundEffectsOn, modifierValue);
+    public HealthNerf(Coordinate2D initialLocation, int modifierValue) {
+        super("sprites/modifiers/healthNerf.png", initialLocation, "audio/soundSkull.mp3", modifierValue);
     }
     @Override
     public void modify(Swimmer swimmer) {

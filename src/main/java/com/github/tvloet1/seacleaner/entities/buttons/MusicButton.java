@@ -3,10 +3,12 @@ package com.github.tvloet1.seacleaner.entities.buttons;
 import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.tvloet1.seacleaner.SeaCleaner;
+import com.github.tvloet1.seacleaner.entities.SoundManager;
+
 public class MusicButton extends MenuButton {
 
-    public MusicButton(Coordinate2D initialLocation, String text, int fontSize, SeaCleaner seaCleaner) {
-        super(initialLocation, text, fontSize, AnchorPoint.TOP_LEFT, seaCleaner);
+    public MusicButton(Coordinate2D initialLocation, String text, int fontSize) {
+        super(initialLocation, text, fontSize, AnchorPoint.TOP_LEFT);
     }
 
     /**
@@ -16,7 +18,7 @@ public class MusicButton extends MenuButton {
      */
     @Override
     public void run() {
-        seaCleaner.switchMusic();
+        SoundManager.getInstance().toggleMusicOn();
         setMusicText();
     }
 
@@ -27,7 +29,7 @@ public class MusicButton extends MenuButton {
      */
     private void setMusicText() {
         String music;
-        if(seaCleaner.getMusicOn()) {
+        if(SoundManager.getInstance().isMusicOn()) {
             music = "on";
         } else {
             music = "off";

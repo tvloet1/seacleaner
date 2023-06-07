@@ -4,8 +4,8 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 
 public class SpeedBuff extends Modifier {
-    public SpeedBuff(Coordinate2D initialLocation, boolean SoundEffectsOn, int modifierValue) {
-        super("sprites/modifiers/speedBuff.png", initialLocation, "audio/speedBuff.mp3", SoundEffectsOn, modifierValue);
+    public SpeedBuff(Coordinate2D initialLocation, int modifierValue) {
+        super("sprites/modifiers/speedBuff.png", initialLocation, "audio/speedBuff.mp3", modifierValue);
     }
 
     @Override
