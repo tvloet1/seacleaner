@@ -4,6 +4,7 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
+import com.github.hanyaeger.api.media.SoundClip;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +14,8 @@ public abstract class Enemy extends DynamicSpriteEntity implements Collider {
     private boolean isAttackMoveCoolDown = false;
     private Timer attackMoveCoolDownTimer;
     private final int attackMoveCoolDownDuration;
+    private String soundClip = "audio/soundOuch.mp3";
+    private final boolean soundEffectsOn = true;
     protected Enemy(String resource, Coordinate2D initialLocation, Size size, int damage, int attackMoveCoolDownDuration) {
         super(resource, initialLocation, size);
         this.damage = damage;
@@ -27,6 +30,7 @@ public abstract class Enemy extends DynamicSpriteEntity implements Collider {
     public void attack(Swimmer swimmer) {
         if(!isAttackMoveCoolDown){
             attackMove();
+            playSound();
             applyDamage(swimmer);
             startAttackMoveCoolDown();
         }
@@ -47,5 +51,16 @@ public abstract class Enemy extends DynamicSpriteEntity implements Collider {
                 attackMoveCoolDownTimer.cancel();
             }
         }, attackMoveCoolDownDuration);
+    }
+    /**
+     * @author Tom Vloet
+     * @since 23-APR-2023
+     * Instantiates sound-clip and plays it
+     */
+    private void playSound() {
+        if (soundEffectsOn) {
+            var sound = new SoundClip(soundClip);
+            sound.play();
+        }
     }
 }
