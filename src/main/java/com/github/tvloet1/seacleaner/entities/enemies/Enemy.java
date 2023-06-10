@@ -23,6 +23,10 @@ public abstract class Enemy extends DynamicSpriteEntity implements Collider {
         this(resource, initialLocation, size, rows, columns, damage, attackMoveCoolDownDuration, "audio/soundOuch.mp3");
     }
 
+    protected Enemy(String resource, Coordinate2D initialLocation, Size size, int damage, int attackMoveCoolDownDuration, String soundClip) {
+        this(resource, initialLocation, size, 1, 1, damage, attackMoveCoolDownDuration, soundClip);
+    }
+
     protected Enemy(String resource, Coordinate2D initialLocation, Size size, int rows, int columns, int damage, int attackMoveCoolDownDuration, String soundClip) {
         super(resource, initialLocation, size, rows, columns);
         this.damage = damage;
