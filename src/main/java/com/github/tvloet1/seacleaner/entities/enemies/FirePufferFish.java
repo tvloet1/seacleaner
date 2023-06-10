@@ -13,7 +13,6 @@ public class FirePufferFish extends PufferFish implements CanFire {
 
     @Override
     public void fire() {
-        System.out.println("Pew pew!");
         gameLevel.addEntityToCollection(new FireProjectile(getAnchorLocation(), new Size(50,50), randomDegreesDirection()));
     }
 }

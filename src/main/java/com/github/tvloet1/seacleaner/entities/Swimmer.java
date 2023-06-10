@@ -155,22 +155,20 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 		if (collidingObject instanceof ModifySwimmer) {
 			interactWithModifier((ModifySwimmer) collidingObject);
 		}
-		if (collidingObject instanceof SeaUrchin || collidingObject instanceof Rock) {
-			var anchorLocation = determineAnchorLocation(collidingObject.getBoundingBox());
-			setSpeed(0);
-			setAnchorLocation(anchorLocation);
-			if(collidingObject instanceof SeaUrchin) {
-				takeDamage(10);
+		if(score >= 10||health <= 0) {
+			SoundManager.getInstance().endMusicScene();
+			if(score >= 10) {
+				seacleaner.setActiveScene(2);
+			} else {
+				seacleaner.setActiveScene(3);
 			}
 		}
-		if(score >= 10) {
-			SoundManager.getInstance().endMusicScene();
-			seacleaner.setActiveScene(2);
-		}
-		if(health <= 0) {
-			SoundManager.getInstance().endMusicScene();
-			seacleaner.setActiveScene(3);
-		}
+	}
+
+	public void haltMovement(Bounds collidingObjectBounds) {
+		var anchorLocation = determineAnchorLocation(collidingObjectBounds);
+		setSpeed(0);
+		setAnchorLocation(anchorLocation);
 	}
 
 	/**
@@ -178,7 +176,7 @@ public class Swimmer extends DynamicSpriteEntity implements KeyListener, SceneBo
 	 * @since 18-APR-2023
 	 * Determine location where the swimmer needs to be anchored to. (after colliding with rock for example)
 	 */
-	private Coordinate2D determineAnchorLocation(Bounds collidingObjectBounds) {
+	public Coordinate2D determineAnchorLocation(Bounds collidingObjectBounds) {
 		var swimmerBounds = getBoundingBox();
 		var direction = getDirection();
 		var anchorLocation = getAnchorLocation();

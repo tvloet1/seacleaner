@@ -5,7 +5,7 @@ import com.github.hanyaeger.api.Size;
 
 public class FireProjectile extends ProjectileEnemy {
     public FireProjectile(Coordinate2D initialLocation, Size size, double direction) {
-        super("sprites/enemies/bubbleRed.png", initialLocation, size, 50, 1, 3, direction);
+        super("sprites/enemies/bubbleRed.png", initialLocation, size, 50, 1, 3, direction, "audio/soundFireball.mp3");
     }
 
     @Override
