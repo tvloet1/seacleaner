@@ -11,10 +11,11 @@ import com.github.tvloet1.seacleaner.entities.modifiers.ModifySwimmer;
 
 public class Litter extends DynamicSpriteEntity implements Collided, Collider, SceneBorderCrossingWatcher, ModifySwimmer {
     private int points;
+
     public Litter(String resource, Coordinate2D initialLocation, int speed, int points) {
         super(resource, initialLocation, new Size(30, 60));
         this.points = points;
-        setMotion(speed,0d);
+        setMotion(speed, 0d);
     }
 
     /**
@@ -24,7 +25,7 @@ public class Litter extends DynamicSpriteEntity implements Collided, Collider, S
      */
     @Override
     public void onCollision(Collider collidingObject) {
-        if(collidingObject instanceof Swimmer) {
+        if (collidingObject instanceof Swimmer) {
             SoundManager.getInstance().playSound("audio/soundPickUpTrash.wav");
             remove();
         }

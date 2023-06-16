@@ -21,6 +21,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
     public GameLevel(SeaCleaner seacleaner) {
         this.seacleaner = seacleaner;
     }
+
     /**
      * @author Tom Vloet
      * @since 04-APR-2023
@@ -45,17 +46,17 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
         addEntity(healthText);
         var swimmer = new Swimmer(new Coordinate2D(500, 150), seacleaner, scoreText, healthText);
         addEntity(swimmer);
-        var firePufferfish = new FirePufferFish(new Coordinate2D(1000, 150), 30,3, this);
+        var firePufferfish = new FirePufferFish(new Coordinate2D(1000, 150), 30, 3, this);
         addEntity(firePufferfish);
-        var poisonPufferfish = new PoisonPufferFish(new Coordinate2D(500, 500), 25,2, this);
+        var poisonPufferfish = new PoisonPufferFish(new Coordinate2D(500, 500), 25, 2, this);
         addEntity(poisonPufferfish);
-        var freezePufferFish = new FreezePufferFish(new Coordinate2D(100, 700), 5,1, this);
+        var freezePufferFish = new FreezePufferFish(new Coordinate2D(100, 700), 5, 1, this);
         addEntity(freezePufferFish);
         var electricEel = new ElectricEel(new Coordinate2D(350, 600), 10, 4);
         addEntity(electricEel);
     }
 
-    public void addEntityToCollection(YaegerEntity entity){
+    public void addEntityToCollection(YaegerEntity entity) {
         this.addEntity(entity);
     }
 
@@ -83,12 +84,11 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, T
     /**
      * @author Tom Vloet
      * @since 23-APR-2023
-     * Depending on the seacleaner value for musicOn turn the music on and lower volume.
+     * Play music if music is on.
      */
     private void setupMusic() {
-        if(SoundManager.getInstance().isMusicOn()) {
-            setBackgroundAudio("audio/behindEnemyLines.mp3");
-            setBackgroundAudioVolume(0.25);
+        if (SoundManager.getInstance().isMusicOn()) {
+            SoundManager.getInstance().playMusic();
         }
     }
 

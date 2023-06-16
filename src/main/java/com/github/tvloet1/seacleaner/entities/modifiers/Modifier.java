@@ -6,7 +6,6 @@ import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
-import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.tvloet1.seacleaner.entities.SoundManager;
 import com.github.tvloet1.seacleaner.entities.Swimmer;
@@ -15,11 +14,12 @@ public abstract class Modifier extends DynamicSpriteEntity implements Collided, 
 
     protected int modifierValue;
     private final String soundClip;
+
     public Modifier(String resource, Coordinate2D initialLocation, String soundClip, int modifierValue) {
         super(resource, initialLocation, new Size(30, 60));
         this.soundClip = soundClip;
         this.modifierValue = modifierValue;
-        setMotion(2,0d);
+        setMotion(2, 0d);
     }
 
     /**
@@ -29,7 +29,7 @@ public abstract class Modifier extends DynamicSpriteEntity implements Collided, 
      */
     @Override
     public void onCollision(Collider collidingObject) {
-        if(collidingObject instanceof Swimmer) {
+        if (collidingObject instanceof Swimmer) {
             SoundManager.getInstance().playSound(soundClip);
             remove();
         }
@@ -44,6 +44,4 @@ public abstract class Modifier extends DynamicSpriteEntity implements Collided, 
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
     }
-
-    public abstract void modify(Swimmer swimmer);
 }

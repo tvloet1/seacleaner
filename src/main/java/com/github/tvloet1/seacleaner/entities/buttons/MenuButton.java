@@ -15,6 +15,7 @@ import javafx.scene.text.FontWeight;
 
 public abstract class MenuButton extends TextEntity implements MouseButtonPressedListener, MouseEnterListener, MouseExitListener {
     protected SeaCleaner seaCleaner;
+
     public MenuButton(Coordinate2D initialLocation, String text, int fontSize, AnchorPoint anchorPoint, SeaCleaner seaCleaner) {
         this(initialLocation, text, fontSize, anchorPoint);
         this.seaCleaner = seaCleaner;

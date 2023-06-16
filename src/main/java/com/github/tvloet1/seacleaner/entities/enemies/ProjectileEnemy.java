@@ -8,11 +8,12 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 public abstract class ProjectileEnemy extends Enemy implements SceneBorderCrossingWatcher {
     public ProjectileEnemy(String resource, Coordinate2D initialLocation, Size size, int damage, int attackMoveCoolDownDuration, int speed, double direction) {
         super(resource, initialLocation, size, damage, attackMoveCoolDownDuration);
-        setMotion(speed,direction);
+        setMotion(speed, direction);
     }
+
     public ProjectileEnemy(String resource, Coordinate2D initialLocation, Size size, int damage, int attackMoveCoolDownDuration, int speed, double direction, String soundClip) {
         super(resource, initialLocation, size, damage, attackMoveCoolDownDuration, soundClip);
-        setMotion(speed,direction);
+        setMotion(speed, direction);
     }
 
     @Override

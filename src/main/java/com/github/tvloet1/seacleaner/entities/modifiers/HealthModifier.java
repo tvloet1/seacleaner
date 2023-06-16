@@ -7,6 +7,7 @@ public class HealthModifier extends Modifier {
     public HealthModifier(String resource, Coordinate2D initialLocation, String soundClip, int modifierValue) {
         super(resource, initialLocation, soundClip, modifierValue);
     }
+
     @Override
     public void modify(Swimmer swimmer) {
         swimmer.adjustHealth(modifierValue);
