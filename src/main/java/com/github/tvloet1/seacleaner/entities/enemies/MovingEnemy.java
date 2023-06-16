@@ -26,45 +26,76 @@ public abstract class MovingEnemy extends Enemy implements SceneBorderCrossingWa
         respawn();
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 05-JUN-2023
+     * Spawns the MovingEnemy either on the left of the screen going right or on the right of the screen going left.
+     * The height is anywhere within the boundaries of the screen.
+     */
     protected void respawn() {
         int xVal = new Random().nextInt(2); // 50 50 change to be 0 or 1
-        int yPos = new Random().nextInt((int) ((getSceneHeight()*0.8) + getSceneHeight()*0.2));
+        int yPos = new Random().nextInt((int) (getSceneHeight()));
         double xPos;
-        if(xVal == 0) {
+        if (xVal == 0) {
             xPos = getSceneWidth();
             goRight();
         } else {
-            xPos = 0 - getWidth() +1;
+            xPos = 0 - getWidth() + 1;
             goLeft();
         }
         setAnchorLocation(new Coordinate2D(xPos, yPos));
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 05-JUN-2023
+     * Changes the direction the MovingEnemy is heading from left to right or vice versa.
+     */
     protected void turnAround() {
-        if(goingLeft()) {
+        if (goingLeft()) {
             goRight();
         } else {
             goLeft();
         }
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 05-JUN-2023
+     * Returns true if the MovingEnemy is going left.
+     */
     protected boolean goingLeft() {
         return getDirection() == 90d;
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 05-JUN-2023
+     * Changes the MovingEnemy direction to left. Also changes frameIndex accordingly.
+     */
     protected void goLeft() {
         setDirection(90d);
         setCurrentFrameIndex(1);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 05-JUN-2023
+     * Changes the MovingEnemy direction to right. Also changes frameIndex accordingly.
+     */
     protected void goRight() {
         setDirection(270d);
         setCurrentFrameIndex(0);
     }
 
+    /**
+     * @author Tom Vloet
+     * @since 05-JUN-2023
+     * Changes the MovingEnemy's direction to either right or left at random.
+     */
     protected void goLeftOrRight() {
         int val = new Random().nextInt(2);
-        if(val == 0) {
+        if (val == 0) {
             goLeft();
         } else {
             goRight();

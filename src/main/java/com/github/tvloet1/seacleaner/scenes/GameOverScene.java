@@ -31,14 +31,15 @@ public class GameOverScene extends StaticScene {
     /**
      * @author Tom Vloet
      * @since 22-APR-2023
+     * Instantiates classes for the GameOverScene.
      */
     @Override
     public void setupEntities() {
-        var gameOverSceneText = new MenuText(new Coordinate2D(getWidth() / 2, getHeight() *0.2), determineText(), 80);
+        var gameOverSceneText = new MenuText(new Coordinate2D(getWidth() / 2, getHeight() * 0.2), determineText(), 80);
         addEntity(gameOverSceneText);
-        var playAgainButton = new PlayAgainButton(new Coordinate2D(getWidth() / 2,getHeight() *0.4),"Play again", 30 ,seacleaner);
+        var playAgainButton = new PlayAgainButton(new Coordinate2D(getWidth() / 2, getHeight() * 0.4), "Play again", 30, seacleaner);
         addEntity(playAgainButton);
-        var quitGameButton = new QuitGameButton(new Coordinate2D(getWidth() / 2,getHeight() *0.5),"Quit game", 30, seacleaner);
+        var quitGameButton = new QuitGameButton(new Coordinate2D(getWidth() / 2, getHeight() * 0.5), "Quit game", 30, seacleaner);
         addEntity(quitGameButton);
     }
 
@@ -48,7 +49,7 @@ public class GameOverScene extends StaticScene {
      * Depending on the seaCleaner value for musicOn turn the music on.
      */
     private void setupMusic() {
-        if(SoundManager.getInstance().isMusicOn()) {
+        if (SoundManager.getInstance().isMusicOn()) {
             setBackgroundAudio(determineMusic());
         }
     }
@@ -59,7 +60,7 @@ public class GameOverScene extends StaticScene {
      * Depending on value of win, return text accordingly.
      */
     private String determineText() {
-        if(win) {
+        if (win) {
             return "You win!";
         } else {
             return "You lose!";
@@ -72,7 +73,7 @@ public class GameOverScene extends StaticScene {
      * Depending on value of win, return path of music file accordingly.
      */
     private String determineMusic() {
-        if(win) {
+        if (win) {
             return "audio/musicEndScene.wav";
         } else {
             return "audio/fogHorn.mp3";
@@ -85,7 +86,7 @@ public class GameOverScene extends StaticScene {
      * Depending on value of win, return path of background image file accordingly.
      */
     private String determineBackground() {
-        if(win) {
+        if (win) {
             return "backgrounds/backgroundEndWin.jpg";
         } else {
             return "backgrounds/backgroundEndLose.jpg";

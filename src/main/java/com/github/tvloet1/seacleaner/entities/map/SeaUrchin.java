@@ -9,6 +9,7 @@ import com.github.tvloet1.seacleaner.entities.modifiers.ModifySwimmer;
 
 public class SeaUrchin extends SpriteEntity implements Collider, ModifySwimmer {
     private int damage = 8;
+
     public SeaUrchin(Coordinate2D location, Size size, String resource) {
         super(resource, location, size);
     }

@@ -11,11 +11,6 @@ public class QuitGameButton extends MenuButton {
         super(initialLocation, text, fontSize, AnchorPoint.CENTER_CENTER, seaCleaner);
     }
 
-    /**
-     * @author Tom Vloet
-     * @since 30-MAY-2023
-     * Determines what happens when the menu button is pressed.
-     */
     @Override
     public void run() {
         seaCleaner.quit();

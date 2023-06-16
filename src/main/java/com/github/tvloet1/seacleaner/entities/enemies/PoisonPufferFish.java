@@ -12,6 +12,6 @@ public class PoisonPufferFish extends PufferFish {
 
     @Override
     public void fire() {
-        gameLevel.addEntityToCollection(new PoisonProjectile(getAnchorLocation(), new Size(25,25), randomDegreesDirection()));
+        gameLevel.addEntityToCollection(new PoisonProjectile(getAnchorLocation(), new Size(25, 25), randomDegreesDirection()));
     }
 }

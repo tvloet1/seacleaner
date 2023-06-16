@@ -2,7 +2,6 @@ package com.github.tvloet1.seacleaner.entities.buttons;
 
 import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
-import com.github.tvloet1.seacleaner.SeaCleaner;
 import com.github.tvloet1.seacleaner.entities.SoundManager;
 
 public class MusicButton extends MenuButton {
@@ -11,11 +10,6 @@ public class MusicButton extends MenuButton {
         super(initialLocation, text, fontSize, AnchorPoint.TOP_LEFT);
     }
 
-    /**
-     * @author Tom Vloet
-     * @since 30-MAY-2023
-     * Determines what happens when the menu button is pressed.
-     */
     @Override
     public void run() {
         SoundManager.getInstance().toggleMusicOn();
@@ -29,7 +23,7 @@ public class MusicButton extends MenuButton {
      */
     private void setMusicText() {
         String music;
-        if(SoundManager.getInstance().isMusicOn()) {
+        if (SoundManager.getInstance().isMusicOn()) {
             music = "on";
         } else {
             music = "off";

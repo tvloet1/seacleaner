@@ -12,6 +12,6 @@ public class FreezePufferFish extends PufferFish {
 
     @Override
     public void fire() {
-        gameLevel.addEntityToCollection(new FreezeProjectile(getAnchorLocation(), new Size(25,25), randomDegreesDirection(), 1000));
+        gameLevel.addEntityToCollection(new FreezeProjectile(getAnchorLocation(), new Size(25, 25), randomDegreesDirection(), 1000));
     }
 }
