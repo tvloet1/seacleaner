@@ -2,10 +2,7 @@ package com.github.tvloet1.seacleaner.entities.spawners;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.entities.EntitySpawner;
-import com.github.tvloet1.seacleaner.entities.modifiers.HealthBuff;
-import com.github.tvloet1.seacleaner.entities.modifiers.HealthNerf;
-import com.github.tvloet1.seacleaner.entities.modifiers.SpeedBuff;
-import com.github.tvloet1.seacleaner.entities.modifiers.SpeedNerf;
+import com.github.tvloet1.seacleaner.entities.modifiers.*;
 
 import java.util.Random;
 
@@ -25,13 +22,13 @@ public class ModifierSpawner extends EntitySpawner {
     protected void spawnEntities() {
         int val = new Random().nextInt(4);
         if(val==0){
-            spawn(new SpeedBuff(randomLocation(),1));
+            spawn(new SpeedModifier("sprites/modifiers/speedBuff.png", randomLocation(), "audio/speedBuff.mp3",1));
         } else if (val==1) {
-            spawn(new SpeedNerf(randomLocation(),-1));
+            spawn(new SpeedModifier("sprites/modifiers/speedNerf.png", randomLocation(), "audio/speedNerf.mp3",-1));
         } else if (val==2) {
-            spawn(new HealthBuff(randomLocation(),60));
+            spawn(new HealthModifier("sprites/modifiers/healthBuff.png", randomLocation(), "audio/soundHeal.mp3",60));
         } else if (val==3) {
-            spawn(new HealthNerf(randomLocation(),-60));
+            spawn(new HealthModifier("sprites/modifiers/healthNerf.png", randomLocation(), "audio/soundSkull.mp3",-60));
         }
     }
 

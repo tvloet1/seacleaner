@@ -70,6 +70,5 @@ public abstract class MovingEnemy extends Enemy implements SceneBorderCrossingWa
             goRight();
         }
     }
-    public abstract void attackMove();
 
 }

@@ -16,9 +16,6 @@ public abstract class ProjectileEnemy extends Enemy implements SceneBorderCrossi
     }
 
     @Override
-    public abstract void attackMove();
-
-    @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         remove();
     }
