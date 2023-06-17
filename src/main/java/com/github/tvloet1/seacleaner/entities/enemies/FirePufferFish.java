@@ -5,7 +5,7 @@ import com.github.hanyaeger.api.Size;
 import com.github.tvloet1.seacleaner.scenes.GameLevel;
 
 
-public class FirePufferFish extends PufferFish implements CanFire {
+public class FirePufferFish extends PufferFish {
     public FirePufferFish(Coordinate2D initialLocation, int damage, int speed, GameLevel gameLevel) {
         super("sprites/enemies/pufferFishOrange.png", initialLocation, damage, speed, gameLevel);
         fire();

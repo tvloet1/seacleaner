@@ -28,7 +28,7 @@ public abstract class PufferFish extends MovingEnemy implements CanFire {
      * @author Tom Vloet
      * @since 06-JUN-2023
      */
-    double randomDegreesDirection() {
+    public double randomDegreesDirection() {
         return new Random().nextInt(361);
     }
 }
